@@ -296,6 +296,13 @@ h3 {
 .hero {
   padding-block: 24px 20px;
 }
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  display: block;
+}
 @media (min-width: 1024px) {
   .hero {
     padding-block: 40px 32px;
@@ -332,6 +339,16 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+/* Mobile: full-width uniform buttons */
+@media (max-width: 639px) {
+  .contact-actions {
+    flex-direction: column;
+  }
+  .contact-actions .button {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .stats {
@@ -563,6 +580,23 @@ h3 {
    This block must come AFTER all base .case rules to win the cascade. */
 /* ---------- OSS repos ---------- */
 
+/* Mobile: no section bands at all — the page is one tone,
+   every card is a contrasting tile, sections separate by titles/spacing */
+@media (max-width: 639px) {
+  .band {
+    background: var(--canvas);
+  }
+  .case {
+    background: var(--band);
+  }
+  .shot {
+    background: var(--canvas);
+  }
+  .case-shots-wrap::after {
+    background: linear-gradient(to right, transparent, var(--band));
+  }
+}
+
 .repos {
   display: grid;
   gap: 12px;
@@ -721,6 +755,19 @@ h3 {
 }
 
 /* ---------- motion ---------- */
+
+/* Theme switch: circular reveal from the toggle button (View Transitions) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
 
 /* Smooth theme switching (colors only — no layout properties) */
 .band,

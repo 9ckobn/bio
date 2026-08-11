@@ -95,7 +95,36 @@ const ogImage = new URL('og.png', site).href;
             try {
               localStorage.setItem('theme', next);
             } catch (e) {}
-            resolve();
+            var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduced || !document.startViewTransition) {
+              resolve();
+              return;
+            }
+            var rect = btn.getBoundingClientRect();
+            var cx = rect.left + rect.width / 2;
+            var cy = rect.top + rect.height / 2;
+            var vt = document.startViewTransition(resolve);
+            vt.ready
+              .then(function () {
+                var r = Math.hypot(
+                  Math.max(cx, window.innerWidth - cx),
+                  Math.max(cy, window.innerHeight - cy)
+                );
+                document.documentElement.animate(
+                  {
+                    clipPath: [
+                      'circle(0px at ' + cx + 'px ' + cy + 'px)',
+                      'circle(' + r + 'px at ' + cx + 'px ' + cy + 'px)',
+                    ],
+                  },
+                  {
+                    duration: 450,
+                    easing: 'ease-out',
+                    pseudoElement: '::view-transition-new(root)',
+                  }
+                );
+              })
+              .catch(function () {});
             return;
           }
           var scrollBtn = e.target.closest('[data-scroll]');
