@@ -1,0 +1,29 @@
+---
+// Root: redirect to remembered or browser-preferred locale, EN by default.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Anton Chuprun</title>
+    <meta http-equiv="refresh" content="0; url=/en/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>
+      (function () {
+        var lang = null;
+        try {
+          lang = localStorage.getItem('lang');
+        } catch (e) {}
+        if (lang !== 'ru' && lang !== 'en') {
+          lang = (navigator.language || 'en').toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en';
+        }
+        location.replace('/' + lang + '/');
+      })();
+    </script>
+  </head>
+  <body>
+    <p><a href="/en/">English</a> · <a href="/ru/">Русский</a></p>
+  </body>
+</html>

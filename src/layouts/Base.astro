@@ -1,0 +1,175 @@
+---
+import '../styles/global.css';
+import { languages, type Lang } from '../i18n/ui';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Path without locale prefix, e.g. '/' — used for canonical/hreflang */
+  route?: string;
+}
+
+const { lang, title, description, route = '/' } = Astro.props;
+const site = Astro.site ?? new URL('https://example.com');
+const path = route === '/' ? '' : route.replace(/^\//, '').replace(/\/?$/, '/');
+const alternates = (Object.keys(languages) as Lang[]).map((l) => ({
+  lang: l,
+  href: new URL(`${l}/${path}`, site).href,
+}));
+const canonical = new URL(`${lang}/${path}`, site).href;
+const ogImage = new URL('og.png', site).href;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0d1117" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={alternates[0].href} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === 'ru' ? 'ru_RU' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {/* Resolve theme before first paint — no flash. Modes: auto (default), light, dark. */}
+    <script is:inline>
+      (function () {
+        var stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch (e) {}
+        var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var resolved =
+          stored === 'light' || stored === 'dark' ? stored : dark ? 'dark' : 'light';
+        document.documentElement.dataset.theme = resolved;
+        document.documentElement.dataset.themeMode = resolved;
+      })();
+    </script>
+  </head>
+  <body>
+    <Header lang={lang} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+
+    {/* Theme toggle: light <-> dark. No explicit choice = follow system (live). */}
+    <script is:inline>
+      (function () {
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+        function resolve() {
+          var stored = null;
+          try {
+            stored = localStorage.getItem('theme');
+          } catch (e) {}
+          var resolved =
+            stored === 'light' || stored === 'dark' ? stored : mq.matches ? 'dark' : 'light';
+          document.documentElement.dataset.theme = resolved;
+          document.documentElement.dataset.themeMode = resolved;
+          document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
+            btn.setAttribute('data-mode', resolved);
+          });
+        }
+        mq.addEventListener('change', resolve);
+        document.addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-theme-toggle]');
+          if (btn) {
+            var cur = document.documentElement.dataset.themeMode || 'light';
+            var next = cur === 'dark' ? 'light' : 'dark';
+            try {
+              localStorage.setItem('theme', next);
+            } catch (e) {}
+            resolve();
+            return;
+          }
+          var scrollBtn = e.target.closest('[data-scroll]');
+          if (scrollBtn) {
+            var wrap = scrollBtn.closest('.case-shots-wrap');
+            var box = wrap && wrap.querySelector('.case-shots');
+            if (box) {
+              var dir = scrollBtn.getAttribute('data-scroll') === 'prev' ? -1 : 1;
+              box.scrollBy({ left: dir * box.clientWidth * 0.8, behavior: 'smooth' });
+            }
+            return;
+          }
+          var copyBtn = e.target.closest('[data-copy]');
+          if (!copyBtn) return;
+          var text = copyBtn.getAttribute('data-copy');
+          var done = copyBtn.getAttribute('data-label-copied') || 'Copied';
+          var ok = function () {
+            var old = copyBtn.textContent;
+            copyBtn.textContent = done;
+            setTimeout(function () {
+              copyBtn.textContent = old;
+            }, 1500);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(ok, function () {});
+          } else {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+              document.execCommand('copy');
+              ok();
+            } catch (err) {}
+            ta.remove();
+          }
+        });
+        resolve();
+
+        // Show carousel nav buttons only when the strip actually overflows
+        function markScrollable() {
+          document.querySelectorAll('.case-shots-wrap').forEach(function (w) {
+            var box = w.querySelector('.case-shots');
+            if (!box) return;
+            if (box.scrollWidth > box.clientWidth + 4) w.setAttribute('data-scrollable', '');
+            else w.removeAttribute('data-scrollable');
+          });
+        }
+        markScrollable();
+        window.addEventListener('resize', markScrollable);
+
+        // Scroll reveal
+        if ('IntersectionObserver' in window) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en) {
+                if (en.isIntersecting) {
+                  en.target.classList.add('is-visible');
+                  io.unobserve(en.target);
+                }
+              });
+            },
+            { threshold: 0.1, rootMargin: '0px 0px -24px 0px' }
+          );
+          document.querySelectorAll('.reveal').forEach(function (el) {
+            io.observe(el);
+          });
+        } else {
+          document.querySelectorAll('.reveal').forEach(function (el) {
+            el.classList.add('is-visible');
+          });
+        }
+
+      })();
+    </script>
+  </body>
+</html>

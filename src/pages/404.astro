@@ -1,0 +1,36 @@
+---
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>404 — Anton Chuprun</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0d1117" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>
+      (function () {
+        var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var mode = 'auto';
+        try {
+          mode = localStorage.getItem('theme') || 'auto';
+        } catch (e) {}
+        document.documentElement.dataset.theme =
+          mode === 'auto' ? (dark ? 'dark' : 'light') : mode;
+      })();
+    </script>
+  </head>
+  <body>
+    <main class="wrap notfound">
+      <div class="code">404</div>
+      <p>
+        Page not found. Здесь ничего нет.<br />
+        <a href="/en/">Go home</a> · <a href="/ru/">На главную</a>
+      </p>
+    </main>
+  </body>
+</html>

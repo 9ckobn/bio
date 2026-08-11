@@ -1,0 +1,43 @@
+---
+import { languages, t, type Lang } from '../i18n/ui';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const tr = t(lang);
+const other = (Object.keys(languages) as Lang[]).find((l) => l !== lang)!;
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href={`/${lang}/`} aria-label="Anton Chuprun">AC</a>
+    <nav class="site-nav">
+      <a href="#cases">{tr('nav.cases')}</a>
+      <a href="#cv">{tr('nav.cv')}</a>
+      <a href="#contact">{tr('nav.contact')}</a>
+    </nav>
+    <div class="header-controls">
+      <a
+        class="icon-button"
+        href={`/${other}/`}
+        data-lang-switch={other}
+        title={tr('lang.switch')}
+        aria-label={tr('lang.switch')}>{languages[other]}</a
+      >
+      <ThemeToggle lang={lang} />
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  // Remember explicit language choice for the root redirect page.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-lang-switch]');
+    if (!a) return;
+    try {
+      localStorage.setItem('lang', a.getAttribute('data-lang-switch'));
+    } catch (err) {}
+  });
+</script>

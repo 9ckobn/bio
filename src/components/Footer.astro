@@ -1,0 +1,32 @@
+---
+import type { Lang } from '../i18n/ui';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+}
+const email = 'bergman.worker@gmail.com';
+const linkedin = 'https://www.linkedin.com/in/anton-chuprun-unity/';
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-contacts">
+      <a href="https://tg.me/unitony" rel="noopener"><Icon name="telegram" /> Telegram ↗</a>
+      <a href={`mailto:${email}`}>{email}</a>
+      <a href={linkedin} target="_blank" rel="noopener"><Icon name="linkedin" /> LinkedIn ↗</a>
+      <a href="https://github.com/9ckobn" target="_blank" rel="noopener"><Icon name="github" /> GitHub ↗</a>
+    </div>
+    <div class="footer-meta">
+      <span>© {new Date().getFullYear()} Anton Chuprun</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-contacts a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+</style>

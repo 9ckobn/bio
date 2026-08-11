@@ -1,0 +1,64 @@
+---
+import type { Case } from '../data/cases';
+import { t, type Lang } from '../i18n/ui';
+import Icon from './Icon.astro';
+
+interface Props {
+  item: Case;
+  lang: Lang;
+}
+const { item, lang } = Astro.props;
+const tr = t(lang);
+const primary = item.links[0];
+---
+
+<article class="case reveal" id={`case-${item.id}`}>
+  <div class="case-head">
+    <div class="case-icon" style={`background:${item.accent}`}>{item.monogram}</div>
+    <div>
+      <div class="case-title">{item.name}</div>
+      <div class="case-tagline">{item.tagline[lang]}</div>
+    </div>
+    {primary && (
+      <a class="case-cta" href={primary.url} target="_blank" rel="noopener">
+        {tr('cases.view')}
+      </a>
+    )}
+  </div>
+
+  <div class="case-shots-wrap">
+    <div class="case-shots" aria-label={tr('cases.screenshots')}>
+      {
+        Array.from({ length: item.shots }, (_, i) => (
+          <div class="shot">shot {i + 1}</div>
+        ))
+      }
+    </div>
+    <button class="shot-nav shot-nav--prev" type="button" data-scroll="prev" aria-label="Previous">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="shot-nav shot-nav--next" type="button" data-scroll="next" aria-label="Next">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+
+  <div class="case-body">
+    <p>{item.description[lang]}</p>
+  </div>
+
+  <div class="case-stack">
+    {item.badges.map((b) => <span class="chip">{b}</span>)}
+    {item.stack.map((s) => <span class="chip">{s}</span>)}
+    {/* TODO(content-stage): key metric chip, e.g. "60 FPS" / "99.9% uptime" */}
+  </div>
+
+  <div class="case-links">
+    {item.links.map((l) => (
+      <a class="pill" href={l.url} target="_blank" rel="noopener">
+        {l.icon && <Icon name={l.icon} />}
+        {l.label}
+        {!l.icon && '↗'}
+      </a>
+    ))}
+  </div>
+</article>

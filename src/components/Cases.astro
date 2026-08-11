@@ -1,0 +1,20 @@
+---
+import { cases } from '../data/cases';
+import { t, type Lang } from '../i18n/ui';
+import CaseCard from './CaseCard.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const tr = t(lang);
+---
+
+<section class="section band" id="cases">
+  <div class="wrap">
+    <h2 class="section-title reveal">{tr('cases.title')}</h2>
+    <div class="cases-grid">
+      {cases.map((c) => <CaseCard item={c} lang={lang} />)}
+    </div>
+  </div>
+</section>

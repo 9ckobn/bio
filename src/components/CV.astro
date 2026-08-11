@@ -1,0 +1,67 @@
+---
+import { repos } from '../data/cases';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const tr = t(lang);
+---
+
+<section class="section wrap" id="cv">
+  <h2 class="section-title reveal">{tr('cv.title')}</h2>
+
+  <div class="card reveal">
+    <h3>{tr('cv.about.title')}</h3>
+    <p>{tr('cv.about.body')}</p>
+    <div class="facts">
+      <span class="chip">{tr('how.async')}</span>
+      <span class="chip">{tr('how.tz')}</span>
+      <span class="chip">{tr('how.payment')}</span>
+    </div>
+    {/* TODO(content-stage): real PDF link */}
+    <a class="button" href="#" aria-disabled="true">{tr('cv.download')}</a>
+  </div>
+
+  <div class="subsection">
+    <h3 class="subsection-title reveal">{tr('cv.verticals.title')}</h3>
+    <div class="cards">
+      <div class="card reveal">
+        <h3>{tr('services.flutter.title')}</h3>
+        <p>{tr('services.flutter.body')}</p>
+      </div>
+      <div class="card reveal">
+        <h3>{tr('services.python.title')}</h3>
+        <p>{tr('services.python.body')}</p>
+      </div>
+      <div class="card wide reveal">
+        <h3>{tr('services.pilot.title')}</h3>
+        <p>{tr('services.pilot.body')}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3 class="subsection-title reveal">{tr('cv.oss.title')}</h3>
+    <div class="repos">
+      {
+        repos.map((r) => (
+          <a class="repo reveal" href={r.url} target="_blank" rel="noopener">
+            <div class="repo-name">{r.name}</div>
+            <p class="repo-desc">{r.description[lang]}</p>
+            <span class="repo-lang">
+              <i style={`background:${r.langColor}`}></i>
+              {r.lang}
+            </span>
+          </a>
+        ))
+      }
+    </div>
+    <p style="margin-top:16px">
+      <a href="https://github.com/9ckobn?tab=repositories" target="_blank" rel="noopener">
+        {tr('oss.all')} ↗
+      </a>
+    </p>
+  </div>
+</section>
