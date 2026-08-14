@@ -3,6 +3,7 @@ import { t, type Lang } from '../i18n/ui';
 import Base from '../layouts/Base.astro';
 import Hero from './Hero.astro';
 import Cases from './Cases.astro';
+import OpenSource from './OpenSource.astro';
 import CV from './CV.astro';
 import Contacts from './Contacts.astro';
 
@@ -16,6 +17,7 @@ const tr = t(lang);
 <Base lang={lang} title={tr('meta.title')} description={tr('meta.description')}>
   <Hero lang={lang} />
   <Cases lang={lang} />
+  <OpenSource lang={lang} />
   <CV lang={lang} />
   <Contacts lang={lang} />
 </Base>

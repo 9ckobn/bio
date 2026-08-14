@@ -1,0 +1,33 @@
+---
+import { repos } from '../data/cases';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const tr = t(lang);
+---
+
+<section class="section wrap" id="oss">
+  <h2 class="section-title reveal">{tr('oss.title')}</h2>
+  <div class="repos">
+    {
+      repos.map((r) => (
+        <a class="repo reveal" href={r.url} target="_blank" rel="noopener">
+          <div class="repo-name">{r.name}</div>
+          <p class="repo-desc">{r.description[lang]}</p>
+          <span class="repo-lang">
+            <i style={`background:${r.langColor}`}></i>
+            {r.lang}
+          </span>
+        </a>
+      ))
+    }
+  </div>
+  <p style="margin-top:16px">
+    <a href="https://github.com/9ckobn?tab=repositories" target="_blank" rel="noopener">
+      {tr('oss.all')} ↗
+    </a>
+  </p>
+</section>

@@ -11,30 +11,28 @@ const email = 'bergman.worker@gmail.com';
 const linkedin = 'https://www.linkedin.com/in/anton-chuprun-unity/';
 ---
 
-<section class="section band" id="contact">
-  <div class="wrap">
-    <h2 class="section-title reveal">{tr('contact.title')}</h2>
-    <div class="contact-actions reveal">
-      <a class="button button--primary" href="https://tg.me/unitony" rel="noopener">
-        <Icon name="telegram" />
-        {tr('contact.tg')} ↗
-      </a>
-      <button
-        class="button"
-        type="button"
-        data-copy={email}
-        data-label-copied={tr('contact.copied')}
-      >
-        {tr('contact.email')}
-      </button>
-      <a class="button" href="https://github.com/9ckobn" target="_blank" rel="noopener">
-        <Icon name="github" />
-        GitHub ↗
-      </a>
-      <a class="button" href={linkedin} target="_blank" rel="noopener">
-        <Icon name="linkedin" />
-        LinkedIn ↗
-      </a>
-    </div>
+<section class="section wrap" id="contact">
+  <h2 class="section-title reveal">{tr('contact.title')}</h2>
+  <div class="contact-actions reveal">
+    <a class="button button--primary" href="https://tg.me/unitony" rel="noopener">
+      <Icon name="telegram" />
+      {tr('contact.tg')} ↗
+    </a>
+    <button
+      class="button"
+      type="button"
+      data-copy={email}
+      data-label-copied={tr('contact.copied')}
+    >
+      {tr('contact.email')}
+    </button>
+    <a class="button" href="https://github.com/9ckobn" target="_blank" rel="noopener">
+      <Icon name="github" />
+      GitHub ↗
+    </a>
+    <a class="button" href={linkedin} target="_blank" rel="noopener">
+      <Icon name="linkedin" />
+      LinkedIn ↗
+    </a>
   </div>
 </section>

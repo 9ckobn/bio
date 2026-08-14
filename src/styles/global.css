@@ -67,7 +67,6 @@ body {
   font-size: 16px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* ---------- layout ---------- */
@@ -113,7 +112,7 @@ h3 {
   gap: 8px;
   padding: 11px 20px;
   border-radius: 10px;
-  border: 1px solid var(--border);
+  border: none;
   background: var(--canvas-subtle);
   color: var(--fg);
   font-size: 15px;
@@ -127,7 +126,6 @@ h3 {
 }
 .button--primary {
   background: var(--accent);
-  border-color: transparent;
   color: var(--accent-fg);
 }
 .button--primary:hover {
@@ -293,19 +291,83 @@ h3 {
 
 /* ---------- hero ---------- */
 
+/* Back to a simple grid: avatar spans the text rows, vertically centered,
+   and its size just steps down per breakpoint to roughly match the
+   typical text-block height at that width. */
 .hero {
   padding-block: 24px 20px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 24px;
+  align-items: start;
 }
 .avatar {
-  width: 72px;
-  height: 72px;
+  grid-row: span 3;
+  align-self: center;
+  width: 216px;
+  height: 216px;
   border-radius: 50%;
-  margin-bottom: 20px;
+  object-fit: cover;
   display: block;
 }
+.hero h1,
+.hero .lead,
+.hero .contact-actions {
+  grid-column: 2;
+}
+.hero .stats {
+  grid-column: 1 / -1;
+}
+/* avatar size steps */
 @media (min-width: 1024px) {
   .hero {
     padding-block: 40px 32px;
+  }
+  .avatar {
+    width: 208px;
+    height: 208px;
+  }
+}
+@media (min-width: 1280px) {
+  .avatar {
+    width: 224px;
+    height: 224px;
+  }
+}
+@media (max-width: 639px) {
+  /* mobile: avatar absolutely pinned top-left so its height can't
+     stretch the name/lead rows; text indents, CTA goes full-width below.
+     left: 20px compensates .wrap's inline padding. */
+  .hero {
+    display: block;
+    position: relative;
+  }
+  .avatar {
+    position: absolute;
+    top: 24px;
+    left: 20px;
+    width: 116px;
+    height: 116px;
+  }
+  .hero h1,
+  .hero .lead {
+    margin-left: 148px;
+  }
+  .hero .lead {
+    margin-top: 10px;
+  }
+  .hero .contact-actions {
+    margin-top: 14px;
+  }
+}
+@media (max-width: 399px) {
+  .avatar {
+    width: 92px;
+    height: 92px;
+  }
+  .hero h1,
+  .hero .lead {
+    margin-left: 120px;
   }
 }
 .hero h1 {
@@ -327,7 +389,7 @@ h3 {
   color: var(--fg-muted);
   font-size: 17px;
   max-width: 54ch;
-  margin: 20px 0 32px;
+  margin-block: 20px 32px;
 }
 @media (min-width: 1024px) {
   .hero .lead {
@@ -379,6 +441,22 @@ h3 {
   margin: 0;
   font-size: 13px;
   color: var(--fg-muted);
+}
+
+/* Stats live in the hero on desktop, inside CV/About on mobile */
+.stats-hero {
+  display: none;
+}
+.stats-cv {
+  margin-top: 20px;
+}
+@media (min-width: 640px) {
+  .stats-hero {
+    display: grid;
+  }
+  .stats-cv {
+    display: none;
+  }
 }
 
 /* ---------- case cards (App Store product page) ---------- */
@@ -586,7 +664,9 @@ h3 {
   .band {
     background: var(--canvas);
   }
-  .case {
+  .case,
+  .card,
+  .repo {
     background: var(--band);
   }
   .shot {
@@ -666,7 +746,7 @@ h3 {
   border: none;
   border-radius: 12px;
   padding: 20px;
-  background: var(--band);
+  background: var(--canvas);
 }
 .card h3 {
   font-size: 17px;
@@ -756,32 +836,44 @@ h3 {
 
 /* ---------- motion ---------- */
 
-/* Theme switch: circular reveal from the toggle button (View Transitions) */
-::view-transition-old(root),
-::view-transition-new(root) {
+/* Theme switch: circular reveal from the toggle button (View Transitions).
+   Animation lives in CSS (started with the transition itself) —
+   a JS-driven animation shows the new root unclipped for one frame */
+::view-transition-old(root) {
   animation: none;
   mix-blend-mode: normal;
-}
-::view-transition-old(root) {
   z-index: 1;
 }
 ::view-transition-new(root) {
+  mix-blend-mode: normal;
   z-index: 2147483646;
+  animation: vt-reveal 0.45s ease-out both;
+}
+@keyframes vt-reveal {
+  from {
+    clip-path: circle(0px at var(--vt-x, 50vw) var(--vt-y, 50vh));
+  }
+  to {
+    clip-path: circle(150vmax at var(--vt-x, 50vw) var(--vt-y, 50vh));
+  }
+}
+/* No element transitions may run while the snapshot exists —
+   they would be captured mid-flight and flash */
+html:active-view-transition *,
+html:active-view-transition {
+  transition: none !important;
+}
+/* backdrop blur glitches inside the root snapshot */
+html:active-view-transition .site-header {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--canvas);
 }
 
-/* Smooth theme switching (colors only — no layout properties) */
-.band,
-.case,
-.card,
-.repo,
-.shot,
-.site-header,
-.button,
-.chip,
-.icon-button,
-.wordmark,
-.case-cta,
-.pill {
+/* Smooth theme switching (colors only — no layout properties).
+   Disabled when View Transitions are available: the circle reveal
+   captures a snapshot and element transitions would fight it */
+html:not(.vt) :where(body, .band, .case, .card, .repo, .shot, .site-header, .button, .chip, .icon-button, .wordmark, .case-cta, .pill) {
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease;
