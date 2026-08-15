@@ -2,8 +2,6 @@ export const languages = { en: 'EN', ru: 'RU' } as const;
 export type Lang = keyof typeof languages;
 export const defaultLang: Lang = 'en';
 
-// NOTE: all user-facing copy below is STRUCTURAL PLACEHOLDER.
-// Final copy arrives at the content stage — edit here only.
 export const ui = {
   en: {
     'meta.title': 'Anton Chuprun — Flutter & Automation Engineer',

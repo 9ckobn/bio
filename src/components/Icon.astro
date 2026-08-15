@@ -3,6 +3,7 @@ import githubSvg from '../icons/github.svg?raw';
 import telegramSvg from '../icons/telegram.svg?raw';
 import linkedinSvg from '../icons/linkedin.svg?raw';
 import appleSvg from '../icons/apple.svg?raw';
+import zynerioSvg from '../icons/zynerio.svg?raw';
 
 export type IconName = 'github' | 'telegram' | 'linkedin' | 'apple' | 'zynerio';
 
@@ -15,24 +16,19 @@ const brand: Record<string, string> = {
   github: githubSvg,
   telegram: telegramSvg,
   apple: appleSvg,
+  zynerio: zynerioSvg,
 };
 let svg: string | null = null;
 if (name === 'linkedin') {
-  // lucide stroke icon — keep fill="none", just size it
   svg = linkedinSvg.replace('<svg', '<svg width="1em" height="1em"');
+} else if (name === 'zynerio') {
+  svg = zynerioSvg.replace('<svg', '<svg width="1em" height="1em"');
 } else if (brand[name]) {
-  // simple-icons glyph — needs currentColor fill
   svg = brand[name].replace('<svg', '<svg fill="currentColor" width="1em" height="1em"');
 }
 ---
 
-{
-  name === 'zynerio' ? (
-    <img class="icon-img" src="/icons/zynerio.svg" alt="" width="16" height="16" />
-  ) : (
-    svg && <span class="icon" aria-hidden="true" set:html={svg} />
-  )
-}
+{svg && <span class="icon" aria-hidden="true" set:html={svg} />}
 
 <style>
   .icon {

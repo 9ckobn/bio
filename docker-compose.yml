@@ -1,0 +1,30 @@
+services:
+  dev:
+    build:
+      context: .
+      target: dev
+    container_name: bio-site-dev
+    ports:
+      - "4321:4321"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.astro
+    environment:
+      - NODE_ENV=development
+      # Enables inotify/polling sync for macOS Docker mounts & newly added assets (images, videos, etc.)
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    stdin_open: true
+    tty: true
+
+  prod:
+    build:
+      context: .
+      target: prod
+    container_name: bio-site-prod
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    profiles:
+      - prod

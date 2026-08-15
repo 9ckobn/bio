@@ -14,7 +14,7 @@ const tr = t(lang);
   <div class="wrap">
     <h2 class="section-title reveal">{tr('cases.title')}</h2>
     <div class="cases-grid">
-      {cases.map((c) => <CaseCard item={c} lang={lang} />)}
+      {cases.map((c, i) => <CaseCard item={c} lang={lang} eager={i === 0} />)}
     </div>
   </div>
 </section>

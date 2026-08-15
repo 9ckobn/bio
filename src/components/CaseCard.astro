@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import type { Case } from '../data/cases';
 import { t, type Lang } from '../i18n/ui';
 import Icon from './Icon.astro';
@@ -6,15 +7,29 @@ import Icon from './Icon.astro';
 interface Props {
   item: Case;
   lang: Lang;
+  eager?: boolean;
 }
-const { item, lang } = Astro.props;
+const { item, lang, eager = false } = Astro.props;
 const tr = t(lang);
 const primary = item.links[0];
 ---
 
 <article class="case reveal" id={`case-${item.id}`}>
   <div class="case-head">
-    <div class="case-icon" style={`background:${item.accent}`}>{item.monogram}</div>
+    <div class="case-icon" style={item.icon ? undefined : `background:${item.accent}`}>
+      {item.icon ? (
+        <Image
+          src={item.icon}
+          alt={item.name}
+          width={60}
+          height={60}
+          class="case-icon-img"
+          loading={eager ? 'eager' : 'lazy'}
+        />
+      ) : (
+        item.monogram
+      )}
+    </div>
     <div>
       <div class="case-title">{item.name}</div>
       <div class="case-tagline">{item.tagline[lang]}</div>
@@ -28,11 +43,58 @@ const primary = item.links[0];
 
   <div class="case-shots-wrap">
     <div class="case-shots" aria-label={tr('cases.screenshots')}>
-      {
-        Array.from({ length: item.shots }, (_, i) => (
-          <div class="shot">shot {i + 1}</div>
+      {item.video ? (
+        <div
+          class="shot shot--video"
+          data-media-type="video"
+          data-src={item.video.src}
+          data-poster={item.video.poster}
+          data-title={item.name}
+          tabindex="0"
+          role="button"
+          aria-label={`Open ${item.name} video in viewer`}
+        >
+          <video
+            class="case-video-player"
+            poster={item.video.poster}
+            data-src={item.video.src}
+            autoplay
+            playsinline
+            muted
+            loop
+            preload="metadata"
+            aria-label={`${item.name} showcase`}
+          ></video>
+        </div>
+      ) : null}
+      {item.screenshots ? (
+        item.screenshots.map((s, idx) => (
+          <div
+            class="shot shot--image"
+            data-media-type="image"
+            data-src={s.full}
+            data-thumb={s.thumb}
+            data-alt={s.alt || `${item.name} ${idx + 1}`}
+            tabindex="0"
+            role="button"
+            aria-label={`Open shot ${idx + 1} in viewer`}
+          >
+            <Image
+              src={s.thumb}
+              data-full={s.full}
+              alt={s.alt || `${item.name} ${idx + 1}`}
+              class="shot-img"
+              width={270}
+              height={585}
+              loading={eager ? 'eager' : 'lazy'}
+            />
+          </div>
         ))
-      }
+      ) : (
+        Array.from({ length: item.shots - (item.video ? 1 : 0) }, (_, i) => (
+          <div class="shot">shot {i + (item.video ? 2 : 1)}</div>
+        ))
+      )}
     </div>
     <button class="shot-nav shot-nav--prev" type="button" data-scroll="prev" aria-label="Previous">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -49,7 +111,7 @@ const primary = item.links[0];
   <div class="case-stack">
     {item.badges.map((b) => <span class="chip">{b}</span>)}
     {item.stack.map((s) => <span class="chip">{s}</span>)}
-    {/* TODO(content-stage): key metric chip, e.g. "60 FPS" / "99.9% uptime" */}
+    
   </div>
 
   <div class="case-links">

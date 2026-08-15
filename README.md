@@ -26,13 +26,49 @@ Hero (availability, positioning, contacts) → Cases (4 App Store-style cards, 2
 - Typography: system font stack (SF Pro on Apple devices).
 - Case cards mimic an App Store product page: icon, name, tagline, "View" pill, screenshot carousel (CSS scroll-snap), meta row, description, links.
 
-## Develop
+## Installation and Running
+
+### With Docker (Recommended)
+
+#### Local Development
+Starts a lightweight development container with hot-reloading and live asset sync (photos, videos, static files):
 
 ```sh
+# Start dev server (http://localhost:4321)
+docker compose up
+
+# Run in background
+docker compose up -d
+
+# Stop containers
+docker compose down
+```
+
+#### Production / Server Deployment
+Builds the static site and serves it via an ultra-lightweight Nginx container (~20MB):
+
+```sh
+# Run production build on port 80
+docker compose -f docker-compose.prod.yml up -d --build
+
+# Run locally for testing (maps to port 8080)
+docker compose --profile prod up -d --build
+```
+
+### Without Docker (Local Node.js)
+
+```sh
+# Install dependencies
 npm install
-npm run dev      # http://localhost:4321
-npm run build    # static output in dist/
-npm run preview  # serve the build
+
+# Start local dev server
+npm run dev
+
+# Build static output to dist/
+npm run build
+
+# Preview static build locally
+npm run preview
 ```
 
 ## TODO (content stage)

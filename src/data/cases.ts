@@ -6,37 +6,82 @@ export interface CaseLink {
   icon?: 'apple' | 'github' | 'telegram' | 'zynerio';
 }
 
+export interface CaseVideo {
+  src: string;
+  poster: string;
+}
+
+export interface CaseScreenshot {
+  thumb: string;
+  full: string;
+  alt?: string;
+}
+
 export interface Case {
   id: string;
-  /** Emoji-free monogram or icon id; real artwork at content stage */
+  
+  icon?: string;
+  
   monogram: string;
-  accent: string; // placeholder accent color for the app icon tile
+  accent: string;
   name: string;
   tagline: Record<Lang, string>;
   badges: string[];
-  /** Number of screenshot slots in the carousel (placeholders until media arrives) */
+  
   shots: number;
+  
+  video?: CaseVideo;
+  
+  screenshots?: CaseScreenshot[];
   description: Record<Lang, string>;
   stack: string[];
   links: CaseLink[];
 }
 
-// PLACEHOLDER CONTENT — names/order are real, copy is not.
-// Media (screenshots, screencasts) arrives from Anton at the content stage.
 export const cases: Case[] = [
   {
     id: 'ai-chan',
+    icon: '/icons/aichan.png',
     monogram: 'AC',
     accent: '#bf3989',
     name: 'AI Chan',
-    tagline: { en: 'AI companion chat — placeholder', ru: 'AI-чатбот — плейсхолдер' },
-    badges: ['App Store', 'Flutter'],
-    shots: 4,
-    description: {
-      en: 'Placeholder description. Problem → what was done → measurable result.',
-      ru: 'Плейсхолдер. Проблема → что сделано → измеримый результат.',
+    tagline: {
+      en: 'AI companion with emotions, Live2D & voice synthesis',
+      ru: 'AI-собеседник с эмоциями, Live2D и озвучкой',
     },
-    stack: ['Flutter', 'Metal', 'Platform channels'],
+    badges: ['Live product'],
+    shots: 5,
+    video: {
+      src: '/videos/aichan.mp4',
+      poster: '/videos/aichan-poster.jpg',
+    },
+    screenshots: [
+      {
+        thumb: '/shots/ai-chan/shot-1-thumb.jpg',
+        full: '/shots/ai-chan/shot-1.jpg',
+        alt: 'AI Chan object recognition & pricing',
+      },
+      {
+        thumb: '/shots/ai-chan/shot-2-thumb.jpg',
+        full: '/shots/ai-chan/shot-2.jpg',
+        alt: 'AI Chan calorie counting with emotional reaction',
+      },
+      {
+        thumb: '/shots/ai-chan/shot-3-thumb.jpg',
+        full: '/shots/ai-chan/shot-3.jpg',
+        alt: 'AI Chan gaming slang dialogue & emotions',
+      },
+      {
+        thumb: '/shots/ai-chan/shot-4-thumb.jpg',
+        full: '/shots/ai-chan/shot-4.jpg',
+        alt: 'AI Chan translator mode & TTS speech',
+      },
+    ],
+    description: {
+      en: 'Interactive AI companion featuring an animated Live2D character, real-time lip-sync, voice dialogue, image generation, and photo vision. Implemented native iOS Live2D rendering via platform channels, custom emotion engine, WebSocket streaming, and in-app subscriptions.',
+      ru: 'Интерактивный AI-компаньон с анимированным Live2D-аватаром, синхронизацией губ (lip-sync), голосовым диалогом, генерацией и распознаванием изображений. Реализовал нативный рендеринг Live2D под iOS через платформенные каналы, пайплайн эмоций персонажа, WebSocket-стриминг и систему встроенных покупок.',
+    },
+    stack: ['Flutter', 'iOS', 'Android', 'TTS / STT', 'IAP', 'Live2D', 'AI'],
     links: [
       {
         label: 'App Store',
@@ -106,7 +151,6 @@ export interface Stat {
   label: Record<Lang, string>;
 }
 
-// PLACEHOLDER numbers — real stats at the content stage
 export const stats: Stat[] = [
   { value: '5+', label: { en: 'years shipping', ru: 'лет в разработке' } },
   { value: '2', label: { en: 'App Store releases', ru: 'релиза в App Store' } },

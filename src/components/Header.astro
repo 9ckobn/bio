@@ -32,7 +32,6 @@ const other = (Object.keys(languages) as Lang[]).find((l) => l !== lang)!;
 </header>
 
 <script is:inline>
-  // Remember explicit language choice for the root redirect page.
   document.addEventListener('click', function (e) {
     var a = e.target.closest('[data-lang-switch]');
     if (!a) return;
