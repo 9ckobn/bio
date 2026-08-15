@@ -14,7 +14,7 @@ const tr = t(lang);
 const primary = item.links[0];
 ---
 
-<article class="case reveal" id={`case-${item.id}`}>
+<article class={`case reveal ${item.orientation === 'landscape' ? 'case--landscape' : ''}`} id={`case-${item.id}`}>
   <div class="case-head">
     <div class="case-icon" style={item.icon ? undefined : `background:${item.accent}`}>
       {item.icon ? (
@@ -84,8 +84,8 @@ const primary = item.links[0];
               data-full={s.full}
               alt={s.alt || `${item.name} ${idx + 1}`}
               class="shot-img"
-              width={270}
-              height={585}
+              width={item.orientation === 'landscape' ? 660 : 270}
+              height={item.orientation === 'landscape' ? 305 : 585}
               loading={eager ? 'eager' : 'lazy'}
             />
           </div>

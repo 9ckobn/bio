@@ -19,19 +19,15 @@ export interface CaseScreenshot {
 
 export interface Case {
   id: string;
-  
   icon?: string;
-  
+  orientation?: 'portrait' | 'landscape';
   monogram: string;
   accent: string;
   name: string;
   tagline: Record<Lang, string>;
   badges: string[];
-  
   shots: number;
-  
   video?: CaseVideo;
-  
   screenshots?: CaseScreenshot[];
   description: Record<Lang, string>;
   stack: string[];
@@ -46,8 +42,8 @@ export const cases: Case[] = [
     accent: '#bf3989',
     name: 'AI Chan',
     tagline: {
-      en: 'AI companion with emotions, Live2D & voice synthesis',
-      ru: 'AI-собеседник с эмоциями, Live2D и озвучкой',
+      en: 'AI anime companion with Live2D, emotions & voice',
+      ru: 'AI-вайфу с Live2D, эмоциями и голосом',
     },
     badges: ['Live product'],
     shots: 5,
@@ -78,10 +74,10 @@ export const cases: Case[] = [
       },
     ],
     description: {
-      en: 'Interactive AI companion featuring an animated Live2D character, real-time lip-sync, voice dialogue, image generation, and photo vision. Implemented native iOS Live2D rendering via platform channels, custom emotion engine, WebSocket streaming, and in-app subscriptions.',
-      ru: 'Интерактивный AI-компаньон с анимированным Live2D-аватаром, синхронизацией губ (lip-sync), голосовым диалогом, генерацией и распознаванием изображений. Реализовал нативный рендеринг Live2D под iOS через платформенные каналы, пайплайн эмоций персонажа, WebSocket-стриминг и систему встроенных покупок.',
+      en: 'Interactive chat companion with animated Live2D characters: real-time lip-sync, TTS/STT voice dialogue, vision, and image generation. Full mobile production stack: in-app subscriptions, ads, analytics, push notifications, and WebSocket streaming.',
+      ru: 'Чат-бот с «живыми» аниме-персонажами: Live2D-анимация с липсинком, голосовой ввод/вывод (TTS/STT), распознавание фото и генерация картинок. Полный цикл: встроенные покупки и подписки, реклама, аналитика, пуши и WebSocket-стриминг.',
     },
-    stack: ['Flutter', 'iOS', 'Android', 'TTS / STT', 'IAP', 'Live2D', 'AI'],
+    stack: ['Flutter', 'iOS', 'Live2D', 'TTS / STT', 'IAP / Subscriptions', 'AdMob', 'Analytics'],
     links: [
       {
         label: 'App Store',
@@ -126,16 +122,43 @@ export const cases: Case[] = [
   {
     id: 'coloring-book',
     monogram: 'CB',
+    icon: '/icons/coloring-book.png',
+    orientation: 'landscape',
     accent: '#0969da',
-    name: 'Coloring Book',
-    tagline: { en: 'Drawing app with custom canvas — placeholder', ru: 'Рисовалка с кастомным холстом — плейсхолдер' },
-    badges: ['App Store', 'Flutter'],
-    shots: 3,
-    description: {
-      en: 'Placeholder description. Custom canvas, CV scoring, subscriptions.',
-      ru: 'Плейсхолдер. Кастомный холст, CV-скоринг, подписки.',
+    name: 'Cozy Coloring',
+    tagline: {
+      en: 'Drawing & coloring app with custom canvas and pixel-perfect palettes',
+      ru: 'Интерактивная раскраска с кастомным холстом и цветовыми палитрами',
     },
-    stack: ['Flutter', 'StoreKit', 'RevenueCat'],
+    badges: ['App Store', 'Flutter'],
+    shots: 4,
+    screenshots: [
+      {
+        thumb: '/shots/coloring-book/shot-1-thumb.jpg',
+        full: '/shots/coloring-book/shot-1.jpg',
+        alt: 'Cozy Coloring rabbit coloring canvas & palette',
+      },
+      {
+        thumb: '/shots/coloring-book/shot-2-thumb.jpg',
+        full: '/shots/coloring-book/shot-2.jpg',
+        alt: 'Cozy Coloring watermelon brush & opacity controls',
+      },
+      {
+        thumb: '/shots/coloring-book/shot-3-thumb.jpg',
+        full: '/shots/coloring-book/shot-3.jpg',
+        alt: 'Cozy Coloring cozy cafe scene drawing workflow',
+      },
+      {
+        thumb: '/shots/coloring-book/shot-4-thumb.jpg',
+        full: '/shots/coloring-book/shot-4.jpg',
+        alt: 'Cozy Coloring landscape coloring & precision tools',
+      },
+    ],
+    description: {
+      en: 'Drawing app built with Flutter and a high-performance custom canvas engine. Features intuitive brush controls, opacity layering, dynamic color palettes, and seamless in-app purchases via RevenueCat & StoreKit.',
+      ru: 'Приложение для раскрашивания на Flutter с высокопроизводительным кастомным движком холста. Включает гибкую настройку кистей и прозрачности, палитры оттенков и подписки через RevenueCat и StoreKit.',
+    },
+    stack: ['Flutter', 'iOS', 'Custom Canvas', 'StoreKit', 'RevenueCat'],
     links: [
       {
         label: 'App Store',

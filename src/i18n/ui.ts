@@ -10,8 +10,7 @@ export const ui = {
     'nav.cases': 'Work',
     'nav.cv': 'CV',
     'nav.contact': 'Contact',
-    'hero.subtitle':
-      'Placeholder subtitle: one or two sentences on positioning. Final copy at the content stage.',
+    'hero.subtitle': 'Flutter & Python developer. Open to part-time and full-time.',
     'cases.title': 'Selected work',
     'cases.view': 'View',
     'cases.screenshots': 'Screenshots',
@@ -45,7 +44,7 @@ export const ui = {
     'nav.cases': 'Кейсы',
     'nav.cv': 'Резюме',
     'nav.contact': 'Контакты',
-    'hero.subtitle': 'Плейсхолдер: одно-два предложения позиционирования. Финальный текст позже.',
+    'hero.subtitle': 'Flutter- и Python-разработчик. Открыт к парт-тайм и фулл-тайм проектам.',
     'cases.title': 'Избранные проекты',
     'cases.view': 'Открыть',
     'cases.screenshots': 'Скриншоты',
