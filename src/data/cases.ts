@@ -14,6 +14,8 @@ export interface CaseVideo {
 export interface CaseScreenshot {
   thumb: string;
   full: string;
+  /** Square (non-phone) shot: rendered in a 1:1 tile instead of the 9/19 phone box. */
+  square?: boolean;
   alt?: string;
 }
 
@@ -37,7 +39,7 @@ export interface Case {
 export const cases: Case[] = [
   {
     id: 'ai-chan',
-    icon: '/icons/aichan.png',
+    icon: '/icons/aichan.webp',
     monogram: 'AC',
     accent: '#bf3989',
     name: 'AI Chan',
@@ -49,27 +51,27 @@ export const cases: Case[] = [
     shots: 5,
     video: {
       src: '/videos/aichan.mp4',
-      poster: '/videos/aichan-poster.jpg',
+      poster: '/videos/aichan-poster.webp',
     },
     screenshots: [
       {
-        thumb: '/shots/ai-chan/shot-1-thumb.jpg',
-        full: '/shots/ai-chan/shot-1.jpg',
+        thumb: '/shots/ai-chan/shot-1-thumb.webp',
+        full: '/shots/ai-chan/shot-1.webp',
         alt: 'AI Chan object recognition & pricing',
       },
       {
-        thumb: '/shots/ai-chan/shot-2-thumb.jpg',
-        full: '/shots/ai-chan/shot-2.jpg',
+        thumb: '/shots/ai-chan/shot-2-thumb.webp',
+        full: '/shots/ai-chan/shot-2.webp',
         alt: 'AI Chan calorie counting with emotional reaction',
       },
       {
-        thumb: '/shots/ai-chan/shot-3-thumb.jpg',
-        full: '/shots/ai-chan/shot-3.jpg',
+        thumb: '/shots/ai-chan/shot-3-thumb.webp',
+        full: '/shots/ai-chan/shot-3.webp',
         alt: 'AI Chan gaming slang dialogue & emotions',
       },
       {
-        thumb: '/shots/ai-chan/shot-4-thumb.jpg',
-        full: '/shots/ai-chan/shot-4.jpg',
+        thumb: '/shots/ai-chan/shot-4-thumb.webp',
+        full: '/shots/ai-chan/shot-4.webp',
         alt: 'AI Chan translator mode & TTS speech',
       },
     ],
@@ -88,17 +90,50 @@ export const cases: Case[] = [
   },
   {
     id: 'zynerio',
+    icon: '/icons/zynerio.webp',
     monogram: 'Z',
-    accent: '#1a7f37',
+    accent: '#6c5ce7',
     name: 'Zynerio',
-    tagline: { en: 'VPN service, solo full cycle — placeholder', ru: 'VPN-сервис полного цикла — плейсхолдер' },
-    badges: ['Live product'],
-    shots: 3,
-    description: {
-      en: 'Placeholder description. Infra, billing, API, bot, web — shipped solo.',
-      ru: 'Плейсхолдер. Инфра, биллинг, API, бот, веб — всё соло.',
+    tagline: {
+      en: 'VPN service run solo: bot, backend, web & fleet automation',
+      ru: 'VPN-сервис под соло-управлением: бот, бэкенд, веб и автоматизация флота',
     },
-    stack: ['Python', 'FastAPI', 'Ansible', 'PostgreSQL'],
+    badges: ['Live product'],
+    shots: 5,
+    screenshots: [
+      {
+        thumb: '/shots/zynerio/shot-1-thumb.webp',
+        full: '/shots/zynerio/shot-1.webp',
+        square: true,
+        alt: 'Zynerio VPN landing (zynerio.com)',
+      },
+      {
+        thumb: '/shots/zynerio/shot-2-thumb.webp',
+        full: '/shots/zynerio/shot-2.webp',
+        square: true,
+        alt: 'Web cabinet: active subscription & 1-click connect',
+      },
+      {
+        thumb: '/shots/zynerio/shot-3-thumb.webp',
+        full: '/shots/zynerio/shot-3.webp',
+        alt: 'In-bot admin panel: grants, promos, refunds, analytics',
+      },
+      {
+        thumb: '/shots/zynerio/shot-4-thumb.webp',
+        full: '/shots/zynerio/shot-4.webp',
+        alt: 'Tariff picker in the Telegram bot',
+      },
+      {
+        thumb: '/shots/zynerio/shot-5-thumb.webp',
+        full: '/shots/zynerio/shot-5.webp',
+        alt: 'SBP QR payment flow in the Telegram bot',
+      },
+    ],
+    description: {
+      en: 'VLESS/XRay VPN sold through a Telegram bot (aiogram): plans, promos, referrals, refunds, Platega QR payments, in-bot admin with analytics. Web cabinet on React + FastAPI (JWT, Telegram Login). Remnawave is the only third-party piece (panel, config distribution, user DB); nodes run remnanode + Cloudflare WARP. The fleet is managed by a custom CLI over Ansible: one-command node bootstrap, rolling updates, DNAT front-relays, backups, healthchecks.',
+      ru: 'VPN на VLESS/XRay с продажей через Telegram-бота (aiogram): тарифы, промо, рефералка, возвраты, оплата QR-кодом через Platega, админка с аналитикой прямо в боте. Веб-кабинет на React + FastAPI (JWT, вход через Telegram). Remnawave — единственный чужой компонент (панель, раздача конфигов, БД пользователей); ноды — remnanode + Cloudflare WARP. Флот под управлением собственного CLI поверх Ansible: bootstrap ноды одной командой, rolling-обновления, DNAT фронт-релеи, бэкапы, healthcheck.',
+    },
+    stack: ['Python', 'FastAPI', 'aiogram 3', 'React', 'PostgreSQL', 'Ansible', 'Docker', 'VLESS / XRay'],
     links: [
       { label: 'zynerio.com', url: 'https://zynerio.com/', icon: 'zynerio' },
       { label: 'Bot', url: 'https://t.me/zynerio_vpn_bot', icon: 'telegram' },
@@ -109,20 +144,47 @@ export const cases: Case[] = [
     monogram: 'VC',
     accent: '#9a6700',
     name: 'Video Conveyor',
-    tagline: { en: 'Autonomous short-video pipeline — placeholder', ru: 'Автономная видео-ферма — плейсхолдер' },
-    badges: ['Automation'],
-    shots: 2,
-    description: {
-      en: 'Placeholder description. Whisper → LLM clip selection → FFmpeg → publish.',
-      ru: 'Плейсхолдер. Whisper → LLM-отбор → FFmpeg → публикация.',
+    tagline: {
+      en: 'Autonomous short-video farm: any source → viral clips for TikTok / Reels / Shorts',
+      ru: 'Автономная ферма шортсов: любой сурс → виральные клипы под TikTok / Reels / Shorts',
     },
-    stack: ['Python', 'Whisper', 'FFmpeg'],
-    links: [{ label: 'GitHub', url: 'https://github.com/9ckobn/video-conveyor', icon: 'github' }],
+    badges: ['Automation'],
+    shots: 4,
+    video: {
+      src: '/videos/conveyor.mp4',
+      poster: '/videos/conveyor-poster.webp',
+    },
+    screenshots: [
+      {
+        thumb: '/shots/video-conveyor/shot-1-thumb.webp',
+        full: '/shots/video-conveyor/shot-1.webp',
+        alt: 'Ready clip: hook title, karaoke subs & animated banner',
+      },
+      {
+        thumb: '/shots/video-conveyor/shot-2-thumb.webp',
+        full: '/shots/video-conveyor/shot-2.webp',
+        alt: 'Ready clip from another source: subs & banner overlay',
+      },
+      {
+        thumb: '/shots/video-conveyor/shot-3-thumb.webp',
+        full: '/shots/video-conveyor/shot-3.webp',
+        alt: 'Ready clip: per-platform render for TikTok / Reels / Shorts',
+      },
+    ],
+    description: {
+      en: 'Short-form video farm promoting Zynerio VPN. Any source (YouTube channel/video or local files) is fetched by yt-dlp with bot-wall bypass and transcribed by faster-whisper large-v3 on GPU with word-level timings. A local LLM (Ollama) picks viral moments, verifies story boundaries and refines cuts by waveform. FFmpeg renders 9:16 blur-pad clips with word-by-word pop-in subtitles (libass), a censorship filter, programmatically rendered animated banners, and per-platform uniqueness packs (background, speed, crop jitter, mirror) for TikTok / Reels / Shorts. Jobs run as an on-disk state machine with a FIFO scheduler and a ledger deduping already-cut scenes.',
+      ru: 'Ферма коротких вертикалок для продвижения Zynerio VPN. Любой сурс (YouTube-канал/видео или локальные файлы) качается yt-dlp с обходом bot-wall и транскрибируется faster-whisper large-v3 на GPU с пословными таймингами. Локальная LLM (Ollama) находит виральные моменты, верифицирует границы историй и точит резы по waveform. FFmpeg рендерит 9:16 blur-pad клипы с пословными pop-in субтитрами (libass), фильтром цензуры, анимированными баннерами и пакетами уникализации (фон, спид, кроп-джиттер, зеркалка) под TikTok / Reels / Shorts. Джобы — state machine на диске с FIFO-планировщиком и ledger-дедупом уже нарезанного.',
+    },
+    stack: ['Python', 'FastAPI', 'Whisper', 'LLM / Ollama', 'FFmpeg', 'yt-dlp', 'Docker'],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/9ckobn/video-conveyor', icon: 'github' },
+      { label: 'TikTok', url: 'https://www.tiktok.com/@skymbria11' },
+    ],
   },
   {
     id: 'coloring-book',
     monogram: 'CB',
-    icon: '/icons/coloring-book.png',
+    icon: '/icons/coloring-book.webp',
     orientation: 'landscape',
     accent: '#0969da',
     name: 'Cozy Coloring',
@@ -134,23 +196,23 @@ export const cases: Case[] = [
     shots: 4,
     screenshots: [
       {
-        thumb: '/shots/coloring-book/shot-1-thumb.jpg',
-        full: '/shots/coloring-book/shot-1.jpg',
+        thumb: '/shots/coloring-book/shot-1-thumb.webp',
+        full: '/shots/coloring-book/shot-1.webp',
         alt: 'Cozy Coloring rabbit coloring canvas & palette',
       },
       {
-        thumb: '/shots/coloring-book/shot-2-thumb.jpg',
-        full: '/shots/coloring-book/shot-2.jpg',
+        thumb: '/shots/coloring-book/shot-2-thumb.webp',
+        full: '/shots/coloring-book/shot-2.webp',
         alt: 'Cozy Coloring watermelon brush & opacity controls',
       },
       {
-        thumb: '/shots/coloring-book/shot-3-thumb.jpg',
-        full: '/shots/coloring-book/shot-3.jpg',
+        thumb: '/shots/coloring-book/shot-3-thumb.webp',
+        full: '/shots/coloring-book/shot-3.webp',
         alt: 'Cozy Coloring cozy cafe scene drawing workflow',
       },
       {
-        thumb: '/shots/coloring-book/shot-4-thumb.jpg',
-        full: '/shots/coloring-book/shot-4.jpg',
+        thumb: '/shots/coloring-book/shot-4-thumb.webp',
+        full: '/shots/coloring-book/shot-4.webp',
         alt: 'Cozy Coloring landscape coloring & precision tools',
       },
     ],

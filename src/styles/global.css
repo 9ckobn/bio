@@ -705,6 +705,16 @@ h3 {
   }
 }
 
+.shot--square {
+  width: 148px;
+  aspect-ratio: 1 / 1;
+}
+@media (min-width: 640px) {
+  .shot--square {
+    width: 168px;
+  }
+}
+
 .case-body {
   padding: 0 18px 14px;
   color: var(--fg-muted);

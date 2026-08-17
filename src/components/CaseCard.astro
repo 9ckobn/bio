@@ -58,11 +58,10 @@ const primary = item.links[0];
             class="case-video-player"
             poster={item.video.poster}
             data-src={item.video.src}
-            autoplay
             playsinline
             muted
             loop
-            preload="metadata"
+            preload="none"
             aria-label={`${item.name} showcase`}
           ></video>
         </div>
@@ -70,7 +69,7 @@ const primary = item.links[0];
       {item.screenshots ? (
         item.screenshots.map((s, idx) => (
           <div
-            class="shot shot--image"
+            class={`shot shot--image${s.square ? ' shot--square' : ''}`}
             data-media-type="image"
             data-src={s.full}
             data-thumb={s.thumb}
@@ -84,8 +83,8 @@ const primary = item.links[0];
               data-full={s.full}
               alt={s.alt || `${item.name} ${idx + 1}`}
               class="shot-img"
-              width={item.orientation === 'landscape' ? 660 : 270}
-              height={item.orientation === 'landscape' ? 305 : 585}
+              width={s.square ? 270 : item.orientation === 'landscape' ? 660 : 270}
+              height={s.square ? 270 : item.orientation === 'landscape' ? 305 : 585}
               loading={eager ? 'eager' : 'lazy'}
             />
           </div>

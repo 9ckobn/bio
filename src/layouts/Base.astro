@@ -14,7 +14,7 @@ interface Props {
 }
 
 const { lang, title, description, route = '/' } = Astro.props;
-const site = Astro.site ?? new URL('https://example.com');
+const site = Astro.site ?? new URL('https://antonchuprun.site');
 const path = route === '/' ? '' : route.replace(/^\//, '').replace(/\/?$/, '/');
 const alternates = (Object.keys(languages) as Lang[]).map((l) => ({
   lang: l,
@@ -265,43 +265,75 @@ const ogImage = new URL('og.png', site).href;
           var shotObserver = new IntersectionObserver(
             function (entries) {
               entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                  var img = entry.target;
-                  var full = img.getAttribute('data-full');
-                  if (full && img.getAttribute('data-loaded') !== 'true') {
-                    var hi = new Image();
-                    hi.onload = function () {
+                if (!entry.isIntersecting) return;
+                var img = entry.target;
+                var full = img.getAttribute('data-full');
+                if (!full || img.getAttribute('data-loaded') === 'true') return;
+                img.setAttribute('data-loaded', 'true');
+                shotObserver.unobserve(img);
+                // Swap via blob URL: a plain img.src = full would re-download
+                // the file when the cache is disabled and blank the tile
+                // while the second request is in flight.
+                if (window.fetch && window.URL && URL.createObjectURL) {
+                  fetch(full)
+                    .then(function (r) {
+                      if (!r.ok) throw new Error('bad status');
+                      return r.blob();
+                    })
+                    .then(function (blob) {
+                      img.src = URL.createObjectURL(blob);
+                    })
+                    .catch(function () {
                       img.src = full;
-                      img.setAttribute('data-loaded', 'true');
-                    };
-                    hi.src = full;
-                    shotObserver.unobserve(img);
-                  }
+                    });
+                } else {
+                  img.src = full;
                 }
               });
             },
-            { rootMargin: '200px 0px' }
+            { rootMargin: '400px 300px' }
           );
-          document.querySelectorAll('video.case-video-player').forEach(function (v) {
-            videoObserver.observe(v);
-          });
+          // Full-res shots start right away: the observer only fetches what
+          // is near the viewport, so media loads progressively on scroll.
           document.querySelectorAll('img.shot-img[data-full]').forEach(function (img) {
             shotObserver.observe(img);
           });
+          // Videos stay deferred until window.load so their fetching never
+          // delays the document load event.
+          var videoLoadingStarted = false;
+          var startVideoLoading = function () {
+            if (videoLoadingStarted) return;
+            videoLoadingStarted = true;
+            document.querySelectorAll('video.case-video-player').forEach(function (v) {
+              videoObserver.observe(v);
+            });
+          };
+          if (document.readyState === 'complete') {
+            startVideoLoading();
+          } else {
+            window.addEventListener('load', startVideoLoading);
+          }
         } else {
           document.querySelectorAll('.reveal').forEach(function (el) {
             el.classList.add('is-visible');
           });
-          document.querySelectorAll('video.case-video-player').forEach(function (v) {
-            if (v.getAttribute('data-src')) {
-              v.src = v.getAttribute('data-src');
-              v.play().catch(function () {});
-            }
-          });
-          document.querySelectorAll('img.shot-img[data-full]').forEach(function (img) {
-            var full = img.getAttribute('data-full');
-            if (full) img.src = full;
-          });
+          var startMediaFallback = function () {
+            document.querySelectorAll('video.case-video-player').forEach(function (v) {
+              if (v.getAttribute('data-src')) {
+                v.src = v.getAttribute('data-src');
+                v.play().catch(function () {});
+              }
+            });
+            document.querySelectorAll('img.shot-img[data-full]').forEach(function (img) {
+              var full = img.getAttribute('data-full');
+              if (full) img.src = full;
+            });
+          };
+          if (document.readyState === 'complete') {
+            startMediaFallback();
+          } else {
+            window.addEventListener('load', startMediaFallback);
+          }
         }
 
         var viewer = document.getElementById('media-viewer');
@@ -669,7 +701,11 @@ const ogImage = new URL('og.png', site).href;
           }
 
           document.querySelectorAll('video.case-video-player').forEach(function (v) {
-            if (v.src) v.play().catch(function () {});
+            if (!v.src) return;
+            var r = v.getBoundingClientRect();
+            if (r.bottom > -200 && r.top < window.innerHeight + 200) {
+              v.play().catch(function () {});
+            }
           });
         }
 
