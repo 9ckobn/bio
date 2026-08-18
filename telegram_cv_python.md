@@ -6,7 +6,7 @@
 ⏰ **Занятость:** Part-time (в приоритете) / Full-time / Проектная
 🛠 **Опыт:** 6 лет в коммерческой разработке
 💰 **Ставка:** от $20 / час или от $2,000 / месяц (USDT, 4dev, Mellow)
-🌐 **Портфолио:** https://antonchuprun.site
+🌐 **Сайт-визитка и демо:** https://antonchuprun.site/python
 💻 **GitHub:** https://github.com/9ckobn
 📩 **Связь:** @unitony
 

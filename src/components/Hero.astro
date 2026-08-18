@@ -7,9 +7,11 @@ import Icon from './Icon.astro';
 
 interface Props {
   lang: Lang;
+  subtitleOverride?: string;
 }
-const { lang } = Astro.props;
+const { lang, subtitleOverride } = Astro.props;
 const tr = t(lang);
+const subtitle = subtitleOverride || tr('hero.subtitle');
 const email = 'bergman.worker@gmail.com';
 const linkedin = 'https://www.linkedin.com/in/antonchuprun-dev/';
 ---
@@ -25,7 +27,7 @@ const linkedin = 'https://www.linkedin.com/in/antonchuprun-dev/';
     fetchpriority="high"
   />
   <h1 class="reveal">Anton Chuprun</h1>
-  <p class="lead reveal">{tr('hero.subtitle')}</p>
+  <p class="lead reveal">{subtitle}</p>
 
   <div class="contact-actions reveal" id="contact-top">
     <a class="button button--primary" href="#contact-form">

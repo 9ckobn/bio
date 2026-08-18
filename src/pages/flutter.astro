@@ -1,0 +1,34 @@
+---
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Anton Chuprun — Flutter & Mobile Engineer</title>
+    <meta name="description" content="High-performance cross-platform iOS & Android apps on Flutter, Custom Canvas 60 FPS, Live2D & StoreKit 2." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Anton Chuprun — Flutter & Mobile Engineer" />
+    <meta property="og:description" content="High-performance cross-platform iOS & Android apps on Flutter, Custom Canvas 60 FPS, Live2D & StoreKit 2." />
+    <meta property="og:image" content="https://antonchuprun.site/og-flutter.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta http-equiv="refresh" content="0; url=/ru/flutter/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>
+      (function () {
+        var lang = null;
+        try {
+          lang = localStorage.getItem('lang');
+        } catch (e) {}
+        if (lang !== 'ru' && lang !== 'en') {
+          lang = (navigator.language || 'en').toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en';
+        }
+        location.replace('/' + lang + '/flutter/');
+      })();
+    </script>
+  </head>
+  <body>
+    <p><a href="/en/flutter/">English</a> · <a href="/ru/flutter/">Русский</a></p>
+  </body>
+</html>

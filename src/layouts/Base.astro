@@ -9,11 +9,11 @@ interface Props {
   lang: Lang;
   title: string;
   description: string;
-  
+  ogImageName?: string;
   route?: string;
 }
 
-const { lang, title, description, route = '/' } = Astro.props;
+const { lang, title, description, ogImageName = 'og.png', route = '/' } = Astro.props;
 const site = Astro.site ?? new URL('https://antonchuprun.site');
 const path = route === '/' ? '' : route.replace(/^\//, '').replace(/\/?$/, '/');
 const alternates = (Object.keys(languages) as Lang[]).map((l) => ({
@@ -21,7 +21,7 @@ const alternates = (Object.keys(languages) as Lang[]).map((l) => ({
   href: new URL(`${l}/${path}`, site).href,
 }));
 const canonical = new URL(`${lang}/${path}`, site).href;
-const ogImage = new URL('og.png', site).href;
+const ogImage = new URL(ogImageName, site).href;
 ---
 
 <!doctype html>

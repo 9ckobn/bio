@@ -9,14 +9,47 @@ import Contacts from './Contacts.astro';
 
 interface Props {
   lang: Lang;
+  focus?: 'python' | 'flutter' | 'all';
 }
-const { lang } = Astro.props;
+const { lang, focus = 'all' } = Astro.props;
 const tr = t(lang);
+
+let title = tr('meta.title');
+let description = tr('meta.description');
+let ogImageName = 'og.png';
+let subtitleOverride: string | undefined = undefined;
+let route = '/';
+
+if (focus === 'python') {
+  route = '/python';
+  ogImageName = 'og-python.png';
+  if (lang === 'ru') {
+    title = 'Антон Чупрун — Python Backend & AI Automation разработчик';
+    description = 'FastAPI, PostgreSQL, Redis, GPU-конвейеры медиа (Whisper, FFmpeg), LLM-оркестрация и боты.';
+    subtitleOverride = 'Python Backend и AI Automation разработчик. Открыт к парт-тайм и фулл-тайм проектам.';
+  } else {
+    title = 'Anton Chuprun — Python Backend & AI Automation Engineer';
+    description = 'FastAPI, PostgreSQL, Redis, GPU media pipelines (Whisper, FFmpeg), LLM orchestration & Telegram bots.';
+    subtitleOverride = 'Python Backend & AI Automation Engineer. Open to part-time and full-time contracts.';
+  }
+} else if (focus === 'flutter') {
+  route = '/flutter';
+  ogImageName = 'og-flutter.png';
+  if (lang === 'ru') {
+    title = 'Антон Чупрун — Flutter & Mobile разработчик';
+    description = 'Кроссплатформенные iOS и Android приложения на Flutter, Custom Canvas 60 FPS, Live2D и StoreKit 2.';
+    subtitleOverride = 'Flutter и Mobile разработчик. Открыт к парт-тайм и фулл-тайм проектам.';
+  } else {
+    title = 'Anton Chuprun — Flutter & Mobile Engineer';
+    description = 'High-performance cross-platform iOS & Android apps on Flutter, Custom Canvas 60 FPS, Live2D & StoreKit 2.';
+    subtitleOverride = 'Flutter & Mobile Engineer. Open to part-time and full-time contracts.';
+  }
+}
 ---
 
-<Base lang={lang} title={tr('meta.title')} description={tr('meta.description')}>
-  <Hero lang={lang} />
-  <Cases lang={lang} />
+<Base lang={lang} title={title} description={description} ogImageName={ogImageName} route={route}>
+  <Hero lang={lang} subtitleOverride={subtitleOverride} />
+  <Cases lang={lang} focus={focus} />
   <OpenSource lang={lang} />
   <CV lang={lang} />
   <Contacts lang={lang} />

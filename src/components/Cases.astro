@@ -5,16 +5,32 @@ import CaseCard from './CaseCard.astro';
 
 interface Props {
   lang: Lang;
+  focus?: 'python' | 'flutter' | 'all';
 }
-const { lang } = Astro.props;
+const { lang, focus = 'all' } = Astro.props;
 const tr = t(lang);
+
+let displayedCases = [...cases];
+if (focus === 'python') {
+  displayedCases.sort((a, b) => {
+    const pyA = a.id === 'zynerio' ? 0 : a.id === 'video-conveyor' ? 1 : 2;
+    const pyB = b.id === 'zynerio' ? 0 : b.id === 'video-conveyor' ? 1 : 2;
+    return pyA - pyB;
+  });
+} else if (focus === 'flutter') {
+  displayedCases.sort((a, b) => {
+    const flA = a.id === 'ai-chan' ? 0 : a.id === 'cozy-coloring' ? 1 : 2;
+    const flB = b.id === 'ai-chan' ? 0 : b.id === 'cozy-coloring' ? 1 : 2;
+    return flA - flB;
+  });
+}
 ---
 
 <section class="section band" id="cases">
   <div class="wrap">
     <h2 class="section-title reveal">{tr('cases.title')}</h2>
     <div class="cases-grid">
-      {cases.map((c, i) => <CaseCard item={c} lang={lang} eager={i === 0} />)}
+      {displayedCases.map((c, i) => <CaseCard item={c} lang={lang} eager={i === 0} />)}
     </div>
   </div>
 </section>
