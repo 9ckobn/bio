@@ -1,25 +1,25 @@
-#резюме #flutter #dart #mobile #ios #android #senior #remote #parttime #fulltime
+#резюме #flutter #dart #mobile #ios #android #remote #parttime #fulltime
 
-👨‍💻 **Антон | Senior Flutter / Mobile Engineer**
+👨‍💻 **Антон | Flutter Developer (iOS & Android)**
 
 📍 **Формат:** Удаленно (Калининград, UTC+2, async-first)
 ⏰ **Занятость:** Part-time (в приоритете) / Full-time / Проектная
-🛠 **Опыт:** 6 лет коммерческой разработки
+🛠 **Опыт:** 6 лет в коммерческой разработке
 💰 **Ставка:** от $20 / час или от $2,000 / месяц (USDT, 4dev, Mellow)
 🌐 **Портфолио:** https://antonchuprun.site
 💻 **GitHub:** https://github.com/9ckobn
 📩 **Связь:** @unitony
 
 🛠 **Стек:**
-• **Core:** Flutter, Dart, BLoC, Riverpod, Clean Architecture, SOLID
-• **Графика и натив:** Custom Canvas, CustomPainter, Scanline Flood-Fill, Live2D Cubism, Metal, OpenGL, C++, Swift
-• **AI и Мультимедиа:** WebSockets streaming, Whisper STT, TTS Lip-Sync, Vision AI, FFmpeg
-• **Хранение и сеть:** Dio, Retrofit, Hive, Drift, SQLite, REST API, GraphQL
-• **Монетизация и релизы:** StoreKit 2, RevenueCat, In-App Purchases, AppsFlyer, Fastlane, CI/CD
+• **Core и архитектура:** Flutter, Dart, BLoC, Cubit, Riverpod, Clean Architecture, Feature-based, GetIt, Freezed, SOLID
+• **Сеть и данные:** Dio, интерсепторы, REST API, WebSockets, Hive, Drift, SQLite, Flutter Secure Storage
+• **Графика и натив:** Custom Canvas, CustomPainter, Scanline Flood-Fill, Live2D, Metal, OpenGL, C++, Swift, WebView
+• **Инфраструктура и сервисы:** Firebase FCM, Crashlytics, AppsFlyer, AppMetrica, Deep Links, Fastlane, CI/CD
+• **Монетизация:** StoreKit 2, RevenueCat, In-App Purchases, пейволлы
 
 💼 **Опыт и результаты:**
-6 лет создаю и выпускаю в сторы сложные мобильные приложения на Flutter под iOS и Android. Геймдев-бэкграунд в Unity позволяет глубоко работать с низкоуровневой графикой, нативными мостами на C++/Metal и добиваться стабильных 60 FPS без утечек памяти. Проектировал кастомный графический движок раскраски с математикой жестов и алгоритмом Scanline Flood-Fill, работающий плавно даже на слабых девайсах.
+Разрабатываю и вывожу в прод кроссплатформенные мобильные приложения на Flutter под iOS и Android. Проектирую чистую масштабируемую архитектуру на BLoC/Cubit с внедрением зависимостей через GetIt, реактивным состоянием и строгой обработкой ошибок. Закрываю разработку под ключ: от верстки сложных адаптивных интерфейсов до интеграции потоковых WebSockets, Push-уведомлений и релизов в сторы.
 
-Для AI-компаньона перенёс рендер Live2D моделей на Metal/OpenGL во Flutter: оптимизировал текстурные атласы и GC, добившись одновременной отрисовки 5+ анимированных персонажей с липсинком. Построил клиентскую шину на WebSockets для потокового приёма токенов LLM и аудио с задержкой менее 200ms. Внедрял автовозобновляемые подписки через StoreKit 2 и RevenueCat, сократил вес релизных сборок на 40% и вывел несколько продуктов в App Store под ключ.
+Реализовывал нестандартные задачи с графикой и перформансом: спроектировал кастомный движок рисования на Canvas со Scanline Flood-Fill алгоритмом (стабильные 60 FPS на слабых устройствах) и перенес рендер Live2D моделей на Metal/OpenGL во Flutter. Построил шину потокового приема аудио и LLM через WebSockets с задержкой менее 200ms. Внедрял автовозобновляемые подписки через StoreKit 2 и RevenueCat, сократил вес релизных сборок на 40% и вывел продукты в App Store.
 
-💡 **Формат:** Самостоятельное ведение фичей от архитектуры до релиза в App Store и Google Play. Готов стартовать с платного тест-пилота на 2–3 дня под вашу задачу.
+💡 **Формат:** Самостоятельное ведение фичей от архитектуры до деплоя. Готов стартовать с платного тест-пилота на 2–3 дня под вашу конкретную задачу.
