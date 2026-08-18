@@ -12,19 +12,26 @@ services:
       - /app/.astro
     environment:
       - NODE_ENV=development
+      - BACKEND_URL=http://backend:8000
       # Enables inotify/polling sync for macOS Docker mounts & newly added assets (images, videos, etc.)
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
+    depends_on:
+      - backend
     stdin_open: true
     tty: true
 
-  prod:
+  backend:
     build:
-      context: .
-      target: prod
-    container_name: bio-site-prod
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bio-site-backend-dev
     ports:
-      - "8080:80"
-    restart: unless-stopped
-    profiles:
-      - prod
+      - "8001:8000"
+    volumes:
+      - ./backend:/app
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
