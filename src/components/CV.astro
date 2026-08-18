@@ -15,7 +15,9 @@ const tr = t(lang);
 
     <div class="card reveal">
       <h3>{tr('cv.about.title')}</h3>
-      <p>{tr('cv.about.body')}</p>
+      {tr('cv.about.body').split('\n\n').map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
       <dl class="stats stats-cv">
         {
           stats.map((s) => (
@@ -27,12 +29,11 @@ const tr = t(lang);
         }
       </dl>
       <div class="facts">
+        <span class="chip">{tr('how.format')}</span>
         <span class="chip">{tr('how.async')}</span>
         <span class="chip">{tr('how.tz')}</span>
         <span class="chip">{tr('how.payment')}</span>
       </div>
-      
-      <button class="button" type="button" disabled aria-disabled="true">{tr('cv.download')}</button>
     </div>
 
     <div class="subsection">

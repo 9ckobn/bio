@@ -255,21 +255,30 @@ export const repos: Repo[] = [
   {
     name: 'musomatic-server',
     url: 'https://github.com/9ckobn/musomatic-server',
-    description: { en: 'Placeholder — lossless music API', ru: 'Плейсхолдер — lossless music API' },
+    description: {
+      en: 'Lossless audio streaming backend: metadata parsing, caching & FLAC transcode',
+      ru: 'Бэкенд lossless-стриминга аудио: парсинг метаданных, кэширование и FLAC-транскодинг',
+    },
     lang: 'Python',
     langColor: '#3572A5',
   },
   {
     name: 'musomatic-client',
     url: 'https://github.com/9ckobn/musomatic-client',
-    description: { en: 'Placeholder — CLI/TUI music client', ru: 'Плейсхолдер — CLI/TUI-клиент' },
+    description: {
+      en: 'Terminal-based TUI music player and streaming client with keyboard navigation',
+      ru: 'TUI/CLI-клиент для стриминга музыки с терминальным плеером и горячими клавишами',
+    },
     lang: 'Python',
     langColor: '#3572A5',
   },
   {
     name: 'tg_agent',
     url: 'https://github.com/9ckobn/tg_agent',
-    description: { en: 'Placeholder — TG channel discovery CLI', ru: 'Плейсхолдер — поиск TG-каналов' },
+    description: {
+      en: 'Telegram intelligence CLI: channel discovery, message filtering & metadata extraction',
+      ru: 'CLI-инструмент для поиска Telegram-каналов, фильтрации сообщений и парсинга',
+    },
     lang: 'Python',
     langColor: '#3572A5',
   },
