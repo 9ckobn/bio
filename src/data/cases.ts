@@ -237,10 +237,10 @@ export interface Stat {
 }
 
 export const stats: Stat[] = [
-  { value: '5+', label: { en: 'years shipping', ru: 'лет в разработке' } },
-  { value: '2', label: { en: 'App Store releases', ru: 'релиза в App Store' } },
-  { value: '6', label: { en: 'open-source projects', ru: 'опенсорс-проектов' } },
-  { value: '1', label: { en: 'live product, solo', ru: 'живой продукт соло' } },
+  { value: '6', label: { en: 'years of shipping', ru: 'лет в разработке' } },
+  { value: '10+', label: { en: 'released products', ru: 'выпущенных продуктов' } },
+  { value: '6', label: { en: 'open-source repos', ru: 'опенсорс-проектов' } },
+  { value: '100%', label: { en: 'end-to-end delivery', ru: 'end-to-end подход' } },
 ];
 
 export interface Repo {
