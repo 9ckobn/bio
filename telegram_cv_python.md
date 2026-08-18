@@ -1,36 +1,24 @@
-#резюме #python #backend #fastapi #ai #automation #devops #remote #parttime #fulltime
+#резюме #python #backend #fastapi #django #senior #remote #parttime #fulltime
 
-🐍 **Антон | Python Backend & AI Automation Engineer**
+🐍 **Антон | Senior Python Backend Engineer**
 
 📍 **Формат:** Удаленно (Калининград, UTC+2, async-first)
-⏰ **Занятость:** Part-time / Проектная (в приоритете) или Full-time
+⏰ **Занятость:** Part-time (в приоритете) / Full-time / Проектная
 🛠 **Опыт:** 6 лет коммерческой разработки
-💰 **Ставка:** от $20 / час или от $2,000 / месяц (USDT, крипта, Mellow, 4dev)
+💰 **Ставка:** от $20 / час или от $2,000 / месяц (USDT, 4dev, Mellow)
 🌐 **Портфолио:** https://antonchuprun.site
 💻 **GitHub:** https://github.com/9ckobn
 📩 **Связь:** @unitony
 
 🛠 **Стек:**
-• **Backend & Core:** Python 3.11+, FastAPI, Asyncio, Pydantic v2, SQLAlchemy, Uvicorn, REST API, WebSockets
-• **Telegram & Bots:** aiogram 3 (FSM, middlewares, inline-клавиатуры, биллинг), Telethon, Pyrogram
-• **Databases & Cache:** PostgreSQL (транзакции, row-level locks, индексы), Redis, SQLite
-• **AI & Media Pipelines:** Whisper (large-v3, word timestamps), FFmpeg (NVENC GPU, filtergraphs, ASS subs), Ollama / LLM API
-• **DevOps & Linux:** Docker, Docker Compose, Ansible (оркестрация флота серверов), Caddy (auto-SSL), Nginx, Linux (hardened security, UFW, fail2ban)
-• **Networks & Security:** iptables DNAT (прокси-реле, failover), VLESS / XRay, Remnawave
+• **Backend:** Python 3.11+, FastAPI, Django, Asyncio, Pydantic, SQLAlchemy, Alembic, gRPC, WebSockets
+• **Базы данных и очереди:** PostgreSQL, Redis, ClickHouse, RabbitMQ, Celery
+• **DevOps и CI/CD:** Docker, Kubernetes, GitHub Actions, Ansible, Linux
+• **AI и Data Pipelines:** Whisper GPU, LLM оркестрация, AI agents, FFmpeg NVENC, скрапинг данных, n8n
 
-🚀 **Что делал на практике (с цифрами и хардкором):**
+💼 **Опыт и результаты:**
+6 лет проектирую и вывожу в прод отказоустойчивые микросервисы, REST/gRPC API и распределенные системы обработки данных. Закрываю задачи end-to-end: от схемы БД, индексов и кэширования до настройки CI/CD пайплайнов, контейнеризации в K8s и интеграции с AI-моделями. В финтех-сервисах проектировал строгие транзакции с row-level блокировками в PostgreSQL, исключая риски double-spending.
 
-• **GPU-конвейеры генерации контента (Video Conveyor):** Спроектировал автономный пайплайн нарезки и монтажа вертикальных видео. Связал Whisper large-v3 для транскрибации, локальные LLM для поиска виральных хуков и FFmpeg с аппаратным ускорением NVENC. Разработал генератор стилизованных ASS-субтитров с пословным lerp-хайлайтом и пиксельной фиксацией позиции — сократил время создания ролика с 20+ минут до 3.5 минут.
+Разрабатывал высокопроизводительные конвейеры обработки медиа и парсинга: связал Whisper large-v3, локальные LLM и FFmpeg с аппаратным ускорением NVENC, сократив время обработки с 20 до 3.5 минут на задачу. Проектировал многопоточные скраперы для сбора миллионов записей с обходом антибот-систем, ротацией прокси и очередями задач.
 
-• **Финтех-биллинг и защита от double-spending (Zynerio):** Разработал асинхронный бэкенд на FastAPI и Telegram-бота на aiogram 3 для VPN-сервиса. Внедрил строгую обработку вебхуков платежей с row-level блокировками в PostgreSQL, исключив повторные начисления подписок при сетевых ретраях.
-
-• **Отказоустойчивая сеть и Ansible-автоматизация:** Настроил инфраструктуру прокси-реле на iptables DNAT для защиты мастер-нод и горячей замены упавших серверов за 5 минут без даунтайма для активных сессий. Написал Ansible-плейбуки для автодеплоя новых узлов за 1 команду.
-
-• **Асинхронные парсеры и Data Mining (tg_agent):** Разработал многопоточный CLI-инструмент для глубокого сбора данных из Telegram-каналов с обходом FloodWait, ротацией сессий и экспортом в структурированный JSON/PostgreSQL.
-
-• **Audio Streaming API (musomatic-server):** Спроектировал сервис потокового стриминга lossless-аудио на FastAPI с парсингом метаданных, транскодингом FLAC на лету и LRU-кэшированием.
-
-💡 **Как работаю:**
-• Продуктовый майндсет: мыслю не абстрактным кодом, а скоростью работы сервиса, бизнес-метриками и аптаймом.
-• Уверенно чувствую себя на стыке бэкенда, AI-пайплайнов и системного администрирования.
-• Готов стартовать с платного тест-пилота (2–3 дня): соберу PoC, напишу бота или микросервис, чтобы вы оценили подход в бою.
+💡 **Формат:** Самостоятельное ведение зоны без микроменеджмента. Готов стартовать с платного тест-пилота на 2–3 дня под вашу конкретную задачу.
