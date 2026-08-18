@@ -1,0 +1,13 @@
+antonchuprun.site, www.antonchuprun.site {
+    root * /srv
+    encode gzip zstd
+    file_server
+    try_files {path} {path}/ /404.html
+}
+
+:80 {
+    root * /srv
+    encode gzip zstd
+    file_server
+    try_files {path} {path}/ /404.html
+}

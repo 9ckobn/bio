@@ -16,9 +16,9 @@ FROM base AS builder
 COPY . .
 RUN npm run build
 
-# Ultra-lightweight production web server (~20MB)
-FROM nginx:alpine AS prod
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Ultra-lightweight production Caddy web server (~30MB) with automatic SSL
+FROM caddy:2-alpine AS prod
+COPY --from=builder /app/dist /srv
+COPY Caddyfile /etc/caddy/Caddyfile
+EXPOSE 80 443
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
