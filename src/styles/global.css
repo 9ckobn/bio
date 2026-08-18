@@ -935,7 +935,7 @@ html:active-view-transition {
   transition: none !important;
 }
 
-html:not(.vt) :where(body, .band, .case, .card, .repo, .shot, .site-header, .button, .chip, .icon-button, .wordmark, .case-cta, .pill, .nav-link, .footer, .social-link) {
+html:not(.vt) :where(body, .band, .case, .card, .repo, .shot, .site-header, .button, .chip, .icon-button, .wordmark, .case-cta, .pill, .nav-link, .footer, .social-link, .form-control, .contact-form-card) {
   transition:
     background-color 0.25s ease,
     color 0.25s ease,
@@ -1390,4 +1390,140 @@ html:not(.vt) :where(body, .band, .case, .card, .repo, .shot, .site-header, .but
 
 .viewer-media-container.is-transitioning {
   transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+/* ------------------------------------------------------------- */
+/* Feedback / Direct Message Form                                */
+/* ------------------------------------------------------------- */
+
+.contact-form-card {
+  margin-top: 28px;
+  background: var(--canvas-subtle);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .contact-form-card {
+    padding: 32px;
+  }
+}
+
+.form-header h3 {
+  margin: 0 0 6px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.form-subtitle {
+  margin: 0 0 20px 0;
+  color: var(--fg-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--fg);
+  background: var(--canvas);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.form-control::placeholder {
+  color: var(--fg-muted);
+  opacity: 0.7;
+}
+
+.form-control:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 130px;
+  line-height: 1.5;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.form-submit-btn {
+  cursor: pointer;
+  padding: 8px 20px;
+  font-weight: 500;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: var(--fg-muted);
+}
+
+.form-status {
+  display: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  animation: fadeIn 0.25s ease;
+}
+
+.form-status.is-visible {
+  display: block;
+}
+
+.form-status.is-success {
+  background: var(--accent-subtle);
+  color: var(--fg);
+  border: 1px solid var(--border);
+}
+
+.form-status.is-error {
+  background: rgba(248, 81, 73, 0.12);
+  color: var(--fg);
+  border: 1px solid rgba(248, 81, 73, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }

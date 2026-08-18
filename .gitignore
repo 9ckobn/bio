@@ -2,3 +2,7 @@ dist/
 node_modules/
 .astro/
 kimi-export-*.md
+.env
+__pycache__/
+*.pyc
+.venv/

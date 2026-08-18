@@ -4,7 +4,6 @@ import telegramSvg from '../icons/telegram.svg?raw';
 import linkedinSvg from '../icons/linkedin.svg?raw';
 import appleSvg from '../icons/apple.svg?raw';
 import zynerioSvg from '../icons/zynerio.svg?raw';
-import emailSvg from '../icons/email.svg?raw';
 
 export type IconName = 'github' | 'telegram' | 'linkedin' | 'apple' | 'zynerio' | 'email';
 
@@ -18,7 +17,6 @@ const brand: Record<string, string> = {
   telegram: telegramSvg,
   apple: appleSvg,
   zynerio: zynerioSvg,
-  email: emailSvg,
 };
 let svg: string | null = null;
 if (name === 'linkedin') {
@@ -30,13 +28,22 @@ if (name === 'linkedin') {
 }
 ---
 
-{svg && <span class="icon" aria-hidden="true" set:html={svg} />}
+{name === 'email' ? (
+  <span class="icon icon--text" aria-hidden="true">✉&#xFE0E;</span>
+) : (
+  svg && <span class="icon" aria-hidden="true" set:html={svg} />
+)}
 
 <style>
   .icon {
     display: inline-flex;
     font-size: 16px;
     line-height: 0;
+  }
+  .icon--text {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1;
   }
   .icon-img {
     display: block;

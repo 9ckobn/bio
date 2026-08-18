@@ -28,21 +28,23 @@ const linkedin = 'https://www.linkedin.com/in/anton-chuprun-unity/';
   <p class="lead reveal">{tr('hero.subtitle')}</p>
 
   <div class="contact-actions reveal" id="contact-top">
-    <a class="button button--primary" href="https://t.me/unitony" target="_blank" rel="noopener">
+    <a class="button button--primary" href="#contact-form">
+      {tr('hero.cta_form')}
+    </a>
+    <a class="button" href="https://t.me/unitony" target="_blank" rel="noopener">
       <Icon name="telegram" />
-      {tr('contact.tg')} ↗
+      {tr('contact.tg')}
     </a>
     <a class="button" href={`mailto:${email}`}>
-      <Icon name="email" />
       {email}
     </a>
     <a class="button" href="https://github.com/9ckobn" target="_blank" rel="noopener">
       <Icon name="github" />
-      GitHub ↗
+      GitHub
     </a>
     <a class="button" href={linkedin} target="_blank" rel="noopener">
       <Icon name="linkedin" />
-      LinkedIn ↗
+      LinkedIn
     </a>
   </div>
 

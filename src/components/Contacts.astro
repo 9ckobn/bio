@@ -16,19 +16,125 @@ const linkedin = 'https://www.linkedin.com/in/anton-chuprun-unity/';
   <div class="contact-actions reveal">
     <a class="button button--primary" href="https://t.me/unitony" target="_blank" rel="noopener">
       <Icon name="telegram" />
-      {tr('contact.tg')} ↗
+      {tr('contact.tg')}
     </a>
     <a class="button" href={`mailto:${email}`}>
-      <Icon name="email" />
       {email}
     </a>
     <a class="button" href="https://github.com/9ckobn" target="_blank" rel="noopener">
       <Icon name="github" />
-      GitHub ↗
+      GitHub
     </a>
     <a class="button" href={linkedin} target="_blank" rel="noopener">
       <Icon name="linkedin" />
-      LinkedIn ↗
+      LinkedIn
     </a>
   </div>
+
+  <div class="contact-form-card reveal" id="contact-form">
+    <div class="form-header">
+      <h3>{tr('contact.form.title')}</h3>
+      <p class="form-subtitle">{tr('contact.form.subtitle')}</p>
+    </div>
+    <form class="contact-form" id="direct-message-form">
+      <input type="text" name="_gotcha" class="form-hp" style="display:none !important" tabindex="-1" autocomplete="off" />
+      <div class="form-group">
+        <label for="form-contact">{tr('contact.form.contact_label')}</label>
+        <input
+          type="text"
+          id="form-contact"
+          name="contact"
+          class="form-control"
+          placeholder={tr('contact.form.contact_placeholder')}
+          required
+          autocomplete="off"
+        />
+      </div>
+      <div class="form-group">
+        <label for="form-message">{tr('contact.form.message_label')}</label>
+        <textarea
+          id="form-message"
+          name="message"
+          class="form-control form-textarea"
+          placeholder={tr('contact.form.message_placeholder')}
+          required
+        ></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="button button--primary form-submit-btn">
+          <span class="btn-label">{tr('contact.form.submit')}</span>
+        </button>
+        <span class="form-hint">{tr('contact.form.hint')}</span>
+      </div>
+      <div
+        class="form-status"
+        id="form-status-msg"
+        data-success-text={tr('contact.form.success')}
+        data-error-text={tr('contact.form.error')}
+      ></div>
+    </form>
+  </div>
 </section>
+
+<script is:inline>
+  (function () {
+    var form = document.getElementById('direct-message-form');
+    var status = document.getElementById('form-status-msg');
+    if (!form || !status) return;
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('.form-submit-btn');
+      var label = btn ? btn.querySelector('.btn-label') || btn : null;
+      var originalText = label ? label.textContent : '';
+
+      var contactInput = form.querySelector('[name="contact"]');
+      var messageInput = form.querySelector('[name="message"]');
+      var gotchaInput = form.querySelector('[name="_gotcha"]');
+
+      var payload = {
+        contact: contactInput ? contactInput.value.trim() : '',
+        message: messageInput ? messageInput.value.trim() : '',
+        _gotcha: gotchaInput ? gotchaInput.value : ''
+      };
+
+      if (!payload.contact || !payload.message) return;
+
+      if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+        if (label) label.textContent = '...';
+      }
+
+      try {
+        var res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          status.textContent = status.getAttribute('data-success-text') || '✓ Sent!';
+          status.className = 'form-status is-visible is-success';
+          form.reset();
+          setTimeout(function () {
+            status.className = 'form-status';
+          }, 6000);
+        } else {
+          var errData = await res.json().catch(function () { return {}; });
+          status.textContent = errData.detail || status.getAttribute('data-error-text') || 'Error sending message.';
+          status.className = 'form-status is-visible is-error';
+        }
+      } catch (err) {
+        status.textContent = status.getAttribute('data-error-text') || 'Network error. Please write via Telegram.';
+        status.className = 'form-status is-visible is-error';
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.style.opacity = '';
+          if (label) label.textContent = originalText;
+        }
+      }
+    });
+  })();
+</script>
