@@ -14,7 +14,10 @@ from pydantic import BaseModel, Field
 load_dotenv()
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "").strip()
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
+raw_chat_ids = os.getenv("TELEGRAM_CHAT_ID", "1362109502").strip()
+WHITELISTED_CHAT_IDS = [cid.strip() for cid in raw_chat_ids.split(",") if cid.strip()]
+if not WHITELISTED_CHAT_IDS:
+    WHITELISTED_CHAT_IDS = ["1362109502"]
 
 app = FastAPI(title="Bio Site Contact API", version="1.0.0")
 
@@ -58,29 +61,13 @@ def is_rate_limited(ip: str) -> bool:
     return False
 
 
-async def resolve_chat_id(bot_token: str) -> Optional[str]:
-    """Dynamically find chat_id from bot getUpdates if TELEGRAM_CHAT_ID is not configured."""
-    global TELEGRAM_CHAT_ID
-    if TELEGRAM_CHAT_ID:
-        return TELEGRAM_CHAT_ID
-
-    async with httpx.AsyncClient(timeout=10.0) as client:
-        res = await client.get(f"https://api.telegram.org/bot{bot_token}/getUpdates")
-        if res.status_code == 200:
-            data = res.json()
-            results = data.get("result", [])
-            for update in reversed(results):
-                msg = update.get("message") or update.get("channel_post")
-                if msg and "chat" in msg:
-                    chat_id = str(msg["chat"]["id"])
-                    TELEGRAM_CHAT_ID = chat_id
-                    return chat_id
-    return None
-
-
 @app.get("/api/health")
 async def health():
-    return {"status": "ok", "bot_configured": bool(TELEGRAM_BOT_TOKEN)}
+    return {
+        "status": "ok",
+        "bot_configured": bool(TELEGRAM_BOT_TOKEN),
+        "recipients_count": len(WHITELISTED_CHAT_IDS),
+    }
 
 
 @app.post("/api/contact")
@@ -102,45 +89,68 @@ async def send_contact(req_data: ContactRequest, request: Request):
     if not TELEGRAM_BOT_TOKEN:
         raise HTTPException(
             status_code=500,
-            detail="Telegram bot is not configured on server.",
+            detail="Telegram bot token is not configured on server.",
         )
 
-    # 4. Resolve destination chat_id
-    chat_id = await resolve_chat_id(TELEGRAM_BOT_TOKEN)
-    if not chat_id:
-        raise HTTPException(
-            status_code=500,
-            detail="Chat ID not found. Please send /start to the Telegram bot first.",
-        )
-
-    # 5. Format message
+    # 4. Format message
     now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    contact_escaped = html.escape(req_data.contact)
-    message_escaped = html.escape(req_data.message)
+    contact_raw = req_data.contact.strip()
+    contact_escaped = html.escape(contact_raw)
+    message_escaped = html.escape(req_data.message.strip())
 
     text = (
-        f"📩 <b>Новое сообщение с сайта</b>\n\n"
+        f"📩 <b>Новое сообщение с antonchuprun.site</b>\n\n"
         f"👤 <b>Контакт:</b> <code>{contact_escaped}</code>\n"
         f"💬 <b>Сообщение:</b>\n{message_escaped}\n\n"
         f"🕒 <i>{now_utc}</i>\n"
         f"🌐 <i>IP: {client_ip}</i>"
     )
 
-    # 6. Send to Telegram
+    # Build optional inline keyboard for quick reply
+    reply_markup = None
+    if contact_raw.startswith("@") and len(contact_raw) > 1:
+        username = contact_raw.lstrip("@").strip()
+        reply_markup = {
+            "inline_keyboard": [
+                [{"text": f"💬 Открыть @{username}", "url": f"https://t.me/{username}"}]
+            ]
+        }
+    elif "t.me/" in contact_raw:
+        reply_markup = {
+            "inline_keyboard": [
+                [{"text": "💬 Открыть диалог в Telegram", "url": contact_raw}]
+            ]
+        }
+
+    # 5. Send to all whitelisted recipients
     async with httpx.AsyncClient(timeout=10.0) as client:
         tg_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-        payload = {
-            "chat_id": chat_id,
-            "text": text,
-            "parse_mode": "HTML",
-            "disable_web_page_preview": True,
-        }
-        res = await client.post(tg_url, json=payload)
-        if res.status_code != 200:
-            error_detail = res.text
+        sent_any = False
+        last_error = ""
+
+        for chat_id in WHITELISTED_CHAT_IDS:
+            payload = {
+                "chat_id": chat_id,
+                "text": text,
+                "parse_mode": "HTML",
+                "disable_web_page_preview": True,
+            }
+            if reply_markup:
+                payload["reply_markup"] = reply_markup
+
+            try:
+                res = await client.post(tg_url, json=payload)
+                if res.status_code == 200:
+                    sent_any = True
+                else:
+                    last_error = res.text
+            except Exception as e:
+                last_error = str(e)
+
+        if not sent_any:
             raise HTTPException(
                 status_code=502,
-                detail=f"Telegram API error: {error_detail}",
+                detail=f"Telegram delivery failed: {last_error}",
             )
 
     return {"ok": True, "status": "sent"}
