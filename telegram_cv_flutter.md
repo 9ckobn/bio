@@ -1,35 +1,25 @@
-#резюме #flutter #mobile #remote #parttime #fulltime
+#резюме #flutter #dart #mobile #ios #android #senior #remote #parttime #fulltime
 
-👨‍💻 **Антон | Senior Flutter Engineer (Ex-Gamedev)**
+👨‍💻 **Антон | Senior Flutter / Mobile Engineer**
 
 📍 **Формат:** Удаленно (Калининград, UTC+2, async-first)
-⏰ **Занятость:** Part-time / Проектная (в приоритете) или Full-time
+⏰ **Занятость:** Part-time (в приоритете) / Full-time / Проектная
 🛠 **Опыт:** 6 лет коммерческой разработки
-💰 **Ставка:** от $20 / час или от $2,000 / месяц (USDT, крипта, Mellow, 4dev)
+💰 **Ставка:** от $20 / час или от $2,000 / месяц (USDT, 4dev, Mellow)
 🌐 **Портфолио:** https://antonchuprun.site
 💻 **GitHub:** https://github.com/9ckobn
 📩 **Связь:** @unitony
 
 🛠 **Стек:**
-• **Core:** Flutter, Dart, BLoC, Riverpod, Provider, Clean Architecture
-• **Graphics & Native:** Custom Canvas, CustomPainter, Flood-Fill, Live2D Cubism, Metal / OpenGL, C++, Swift
-• **Media & AI:** WebSockets (streaming LLM/audio), Whisper STT, TTS Lip-Sync, Vision AI, FFmpeg
-• **Storage & Network:** Dio, Retrofit, Hive, Isar, Drift, SQLite, REST API, WebSockets
-• **Monetization & Release:** StoreKit 2, RevenueCat, In-App Purchases, AppsFlyer, Amplitude, Fastlane, CI/CD
+• **Core:** Flutter, Dart, BLoC, Riverpod, Clean Architecture, SOLID
+• **Графика и натив:** Custom Canvas, CustomPainter, Scanline Flood-Fill, Live2D Cubism, Metal, OpenGL, C++, Swift
+• **AI и Мультимедиа:** WebSockets streaming, Whisper STT, TTS Lip-Sync, Vision AI, FFmpeg
+• **Хранение и сеть:** Dio, Retrofit, Hive, Drift, SQLite, REST API, GraphQL
+• **Монетизация и релизы:** StoreKit 2, RevenueCat, In-App Purchases, AppsFlyer, Fastlane, CI/CD
 
-🚀 **Что делал на практике (с цифрами и хардкором):**
+💼 **Опыт и результаты:**
+6 лет создаю и выпускаю в сторы сложные мобильные приложения на Flutter под iOS и Android. Геймдев-бэкграунд в Unity позволяет глубоко работать с низкоуровневой графикой, нативными мостами на C++/Metal и добиваться стабильных 60 FPS без утечек памяти. Проектировал кастомный графический движок раскраски с математикой жестов и алгоритмом Scanline Flood-Fill, работающий плавно даже на слабых девайсах.
 
-• **Кастомные графические движки и 60 FPS на Canvas:** С нуля разработал приложение-раскраску (Cozy Coloring, App Store). Реализовал Scanline Flood-Fill алгоритм, математику жестов (зум, панорамирование, интерполяция штриха) и парсинг векторных контуров — стабильные 60 FPS без дропов кадров даже на бюджетных девайсах.
+Для AI-компаньона перенёс рендер Live2D моделей на Metal/OpenGL во Flutter: оптимизировал текстурные атласы и GC, добившись одновременной отрисовки 5+ анимированных персонажей с липсинком. Построил клиентскую шину на WebSockets для потокового приёма токенов LLM и аудио с задержкой менее 200ms. Внедрял автовозобновляемые подписки через StoreKit 2 и RevenueCat, сократил вес релизных сборок на 40% и вывел несколько продуктов в App Store под ключ.
 
-• **Интеграция нативного C++/Metal и рендер Live2D:** Для AI-компаньона (AI Chan, App Store) перенёс рендер Live2D Cubism моделей на Metal/OpenGL в Flutter. Оптимизировал жизненный цикл текстурных атласов и сборку мусора — одновременный рендеринг 5+ анимированных персонажей с липсинком в 60 FPS.
-
-• **Real-Time AI & Аудио-стриминг:** Построил клиентскую шину на WebSockets для потокового приёма токенов LLM и аудио-чанков. Реализовал бесшовный буфер воспроизведения голоса с микро-задержками (<200ms) и синхронизацией мимики персонажа.
-
-• **Монетизация и подписки (IAP):** Проектировал пейволлы и внедрял автовозобновляемые подписки через StoreKit 2 и RevenueCat (триалы, промокоды, graceful degradation при обрыве сети, защита от повторных списаний).
-
-• **Оптимизация размера и памяти:** Сократил вес релизных бандлов на 40% за счет оптимизации ассетов и шейдеров, устранил утечки памяти в нативных контроллерах камеры и аудиосессий.
-
-💡 **Как работаю:**
-• Самостоятельно закрываю фичи от архитектуры до релиза в App Store / Google Play.
-• Геймдев-бэкграунд (Unity) даёт глубокое понимание GPU, шейдеров и оптимизации памяти.
-• Готов стартовать с платного тест-пилота (2–3 дня) на конкретную задачу, чтобы показать качество и скорость в бою.
+💡 **Формат:** Самостоятельное ведение фичей от архитектуры до релиза в App Store и Google Play. Готов стартовать с платного тест-пилота на 2–3 дня под вашу задачу.
