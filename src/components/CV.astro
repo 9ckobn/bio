@@ -4,9 +4,78 @@ import { t, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
+  focus?: 'python' | 'flutter' | 'all';
 }
-const { lang } = Astro.props;
+const { lang, focus = 'all' } = Astro.props;
 const tr = t(lang);
+
+let aboutParagraphs = tr('cv.about.body').split('\n\n');
+let serviceCard1 = {
+  title: tr('services.flutter.title'),
+  body: tr('services.flutter.body'),
+};
+let serviceCard2 = {
+  title: tr('services.python.title'),
+  body: tr('services.python.body'),
+};
+
+if (focus === 'python') {
+  if (lang === 'ru') {
+    aboutParagraphs = [
+      'Проектирую и вывожу в прод асинхронные бэкенды на FastAPI, Telegram-ботов и распределенные системы обработки данных. Закрываю разработку под ключ: от проектирования схем БД в PostgreSQL, индексов и кэширования в Redis до настройки CI/CD пайплайнов, контейнеризации в Docker и интеграции с AI-моделями.',
+      'Разрабатывал автономные GPU-конвейеры медиа (Whisper large-v3, FFmpeg NVENC, локальные LLM) и масштабируемые серверные флоты. Привык брать ответственность за проект целиком от архитектуры до деплоя, работать в async-first формате и быстро доставлять готовый результат в прод.',
+    ];
+    serviceCard1 = {
+      title: 'FastAPI, бэкенд и микросервисы',
+      body: 'Асинхронные REST API и WebSockets, строгие транзакции с row-level блокировками в PostgreSQL для защиты от double-spending, кэширование в Redis, миграции Alembic, интеграции с внешними API и платежными системами.',
+    };
+    serviceCard2 = {
+      title: 'AI, медиа-конвейеры и автоматизация',
+      body: 'GPU-пайплайны нарезки и монтажа видео (Whisper large-v3, FFmpeg NVENC, стилизованные ASS-субтитры), Telegram-боты с аналитикой (aiogram 3), асинхронный скрапинг данных и автоматизация флота через Ansible.',
+    };
+  } else {
+    aboutParagraphs = [
+      'I design and ship production-ready async backends with FastAPI, Telegram bots, and distributed data processing systems. I handle features end-to-end: from PostgreSQL database schemas, indexing, and Redis caching to CI/CD pipelines, Docker containerization, and AI model orchestration.',
+      'Experienced in building GPU media pipelines (Whisper large-v3, FFmpeg NVENC, local LLMs) and automated server fleets. Async-first by default, comfortable owning services without micromanagement, and focused on shipping working software to production.',
+    ];
+    serviceCard1 = {
+      title: 'FastAPI, Backend & Microservices',
+      body: 'Async REST APIs and WebSockets, transactional integrity with row-level locks in PostgreSQL to prevent double-spending, Redis caching, Alembic migrations, third-party API integrations, and billing webhooks.',
+    };
+    serviceCard2 = {
+      title: 'AI, Media Pipelines & Automation',
+      body: 'GPU-accelerated video/audio processing pipelines (Whisper large-v3, FFmpeg NVENC, dynamic ASS subtitles), Telegram bots with analytics (aiogram 3), async data scrapers, and automated server fleets via Ansible.',
+    };
+  }
+} else if (focus === 'flutter') {
+  if (lang === 'ru') {
+    aboutParagraphs = [
+      'Создаю и выпускаю в сторы сложные кроссплатформенные мобильные приложения на Flutter под iOS и Android. Глубоко понимаю работу с низкоуровневой графикой, нативными мостами на C++/Metal и добиваюсь стабильных 60 FPS без утечек памяти.',
+      'Закрываю разработку под ключ: от чистого модульного стейт-менеджмента на BLoC/Cubit с GetIt и Freezed до real-time WebSockets, интеграции AI-моделей (Live2D, голос, компьютерное зрение) и автовозобновляемых подписок StoreKit 2 / RevenueCat.',
+    ];
+    serviceCard1 = {
+      title: 'Flutter, архитектура и мобильные продукты',
+      body: 'Кроссплатформенная разработка под iOS и Android, чистая масштабируемая архитектура на BLoC/Cubit, Feature-based подход, GetIt, Freezed, SOLID, навигация, Push-уведомления (FCM) и Deep Links.',
+    };
+    serviceCard2 = {
+      title: 'Графика, AI & Монетизация',
+      body: 'Кастомные холсты на Canvas со Scanline Flood-Fill (60 FPS), нативный рендер Live2D через Metal/OpenGL, потоковый прием аудио/LLM через WebSockets (<200ms), пейволлы и подписки через StoreKit 2 / RevenueCat.',
+    };
+  } else {
+    aboutParagraphs = [
+      'I build and ship complex cross-platform mobile apps with Flutter for iOS and Android. Deep expertise in low-level graphics, native C++/Metal bridges, and delivering smooth 60 FPS performance without memory leaks.',
+      'Handling the full lifecycle: from clean modular state architecture with BLoC/Cubit, GetIt, and Freezed to real-time WebSockets, AI companion integration (Live2D, voice, computer vision), and in-app subscriptions with StoreKit 2 / RevenueCat.',
+    ];
+    serviceCard1 = {
+      title: 'Flutter, Architecture & Mobile Products',
+      body: 'Cross-platform engineering for iOS and Android, clean scalable architecture with BLoC/Cubit, feature-based modularity, GetIt, Freezed, SOLID, navigation, Push notifications (FCM), and Deep Links.',
+    };
+    serviceCard2 = {
+      title: 'Graphics, AI & Monetization',
+      body: 'Custom Canvas engines with Scanline Flood-Fill (60 FPS), native Live2D rendering via Metal/OpenGL, real-time WebSocket audio/LLM streaming (<200ms), paywalls, and auto-renewing subscriptions via StoreKit 2 / RevenueCat.',
+    };
+  }
+}
 ---
 
 <section class="section band" id="cv">
@@ -15,7 +84,7 @@ const tr = t(lang);
 
     <div class="card reveal">
       <h3>{tr('cv.about.title')}</h3>
-      {tr('cv.about.body').split('\n\n').map((paragraph) => (
+      {aboutParagraphs.map((paragraph) => (
         <p>{paragraph}</p>
       ))}
       <dl class="stats stats-cv">
@@ -40,12 +109,12 @@ const tr = t(lang);
       <h3 class="subsection-title reveal">{tr('cv.verticals.title')}</h3>
       <div class="cards">
         <div class="card reveal">
-          <h3>{tr('services.flutter.title')}</h3>
-          <p>{tr('services.flutter.body')}</p>
+          <h3>{serviceCard1.title}</h3>
+          <p>{serviceCard1.body}</p>
         </div>
         <div class="card reveal">
-          <h3>{tr('services.python.title')}</h3>
-          <p>{tr('services.python.body')}</p>
+          <h3>{serviceCard2.title}</h3>
+          <p>{serviceCard2.body}</p>
         </div>
         <div class="card wide reveal">
           <h3>{tr('services.pilot.title')}</h3>
